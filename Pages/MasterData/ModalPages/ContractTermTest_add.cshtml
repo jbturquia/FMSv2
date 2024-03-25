@@ -204,50 +204,47 @@
             })    
     }
 
-function updatetable()
-{      
-        var lease_period = $('#lease_period').val().split(' - ');
-        var start_lease = lease_period[0];
-        var end_lease = lease_period[1];
-        var inputDataCollection = {};
-            inputDataCollection['username'] = $("#username").val();
-            inputDataCollection['token'] = $("#token").val();
-           // inputDataCollection['dataSource'] = dataSource;
-            inputDataCollection['sysapp'] = sysapp;
-            inputDataCollection['start_of_payment'] = $(".start_of_payment").val();
-            inputDataCollection['advance_payment'] = $(".advance_payment").val();
-            inputDataCollection['lease_type'] = $(".lease_type").val();
-            inputDataCollection['payment_terms'] = $(".payment_terms").val();
-            inputDataCollection['start_lease'] = start_lease;
-            inputDataCollection['end_lease'] = end_lease;
-            inputDataCollection['contract_code'] = 'CO_1';
-            // inputDataCollection['inputData'] = inputData;
-            console.log(inputDataCollection);
-     $.ajax({
+function updatetable() {
+    var lease_period = $('#lease_period').val().split(' - ');
+    var start_lease = lease_period[0];
+    var end_lease = lease_period[1];
+    var inputDataCollection = {};
+    inputDataCollection['username'] = $("#username").val();
+    inputDataCollection['token'] = $("#token").val();
+    inputDataCollection['sysapp'] = sysapp;
+    inputDataCollection['start_of_payment'] = $(".start_of_payment").val();
+    inputDataCollection['advance_payment'] = $(".advance_payment").val();
+    inputDataCollection['lease_type'] = $(".lease_type").val();
+    inputDataCollection['payment_terms'] = $(".payment_terms").val();
+    inputDataCollection['start_lease'] = start_lease;
+    inputDataCollection['end_lease'] = end_lease;
+    inputDataCollection['contract_code'] = 'CO_1';
+    console.log(inputDataCollection);
+    $.ajax({
         url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/generate',
-                type: 'post',
-                dataType: 'json',
-                data: JSON.stringify(inputDataCollection),
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                     
+        type: 'post',
+        dataType: 'json',
+        data: JSON.stringify(inputDataCollection),
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+
             $('#tbl_ContractTerm').DataTable().clear().draw();
             var id = 0;
             var tablerow = [];
             for (var i in data) {
                 var tablearr = [];
-                 data[i].id = id++;
+                data[i].id = id++;
                 tablearr.push(data[i].id);
                 // tablearr.push('<div style="text-align:left" data-rowid="' + data[i].id + '" data-colid="Payment_date">' + data[i].Payment_date+ '</div>');
-                tablearr.push('<input type="text" style="width: 100%;border:1px;" disabled  class="date updatedcell" data-rowid="' + data[i].id + '" data-colid="Payment_date" value="'+ data[i].Payment_date +'">');
-               tablearr.push(data[i].status);
-               tablearr.push('<input type="text" style="width: 100%;border:1px; background-color:#D6DBDF;" id="amountNew" class="newAmount updatedcell" data-rowid="' + data[i].id + '" data-colid="amount" value="'+ data[i].amount +'">');
-                
-              
+                tablearr.push('<input type="text" style="width: 100%;border:1px;" disabled  class="date updatedcell" data-rowid="' + data[i].id + '" data-colid="Payment_date" value="' + data[i].Payment_date + '">');
+                tablearr.push(data[i].status);
+                tablearr.push('<input type="text" style="width: 100%;border:1px; background-color:#D6DBDF;" id="amountNew" class="newAmount updatedcell" data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].amount + '">');
+
+
                 tablerow.push(tablearr);
             }
             $("#tbl_ContractTerm").DataTable().rows.add(tablerow).draw();
-            
+
         }
     });
 }
