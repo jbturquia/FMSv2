@@ -98,29 +98,27 @@
 <script>
     initDataTablesContract();
     var dataforsaving = [];
-    $('#lease_period').daterangepicker(
-        {
-            showDropdowns: true,
-            minYear: 1950,
-            maxYear: 2500,
-            showAnim: 'slideDown',
-            dateFormat: 'dd/mm/yyyy'
-            
-        }
-    );
-    $('#lease_period').on('apply.daterangepicker', function() {
-    var lease_period = $('#lease_period').val().split(' - ');
-    var start_lease = lease_period[0];
-    var end_lease = lease_period[1];
-      var start = new Date(start_lease);
-        var end = new Date(end_lease);
-        console.log(start_lease,end_lease)
-      var diff = new Date(end - start);
-      var days = diff/1000/60/60/24;
-      var years = parseInt(days/365);
-      $('#terms').val(years);
+    $('#lease_period').daterangepicker({
+        showDropdowns: true,
+        minYear: 1950,
+        maxYear: 2500,
+        showAnim: 'slideDown',
+        dateFormat: 'dd/mm/yyyy'
+
     });
-     
+    $('#lease_period').on('apply.daterangepicker', function () {
+        var lease_period = $('#lease_period').val().split(' - ');
+        var start_lease = lease_period[0];
+        var end_lease = lease_period[1];
+        var start = new Date(start_lease);
+        var end = new Date(end_lease);
+        console.log(start_lease, end_lease)
+        var diff = new Date(end - start);
+        var days = diff / 1000 / 60 / 60 / 24;
+        var years = parseInt(days / 365);
+        $('#terms').val(years);
+    });
+
     $('#reservationdate').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
@@ -135,227 +133,225 @@
         }
     });
 
-    $('#reservationdate').on('apply.daterangepicker', function(ev, picker) {
-    $(this).val(picker.startDate.format('MM/DD/YYYY'));
-    console.log('reservationdate apply',$(this).val(picker.startDate.format('MM/DD/YYYY')));
+    $('#reservationdate').on('apply.daterangepicker', function (ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY'));
+        console.log('reservationdate apply', $(this).val(picker.startDate.format('MM/DD/YYYY')));
     });
 
-    $('#reservationdate').on('cancel.daterangepicker', function(ev, picker) {
-    $(this).val('');
+    $('#reservationdate').on('cancel.daterangepicker', function (ev, picker) {
+        $(this).val('');
     });
-   
-   
+
+
 
     function generate() {
         var lease_period = $('#lease_period').val().split(' - ');
         var start_lease = lease_period[0];
         var end_lease = lease_period[1];
 
-     
+
         var inputDataCollection = {};
-            inputDataCollection['username'] = $("#username").val();
-            inputDataCollection['token'] = $("#token").val();
-           // inputDataCollection['dataSource'] = dataSource;
-            inputDataCollection['sysapp'] = sysapp;
-            inputDataCollection['start_of_payment'] = $(".start_of_payment").val();
-            inputDataCollection['advance_payment'] = $(".advance_payment").val();
-            inputDataCollection['lease_type'] = $(".lease_type").val();
-            inputDataCollection['payment_terms'] = $(".payment_terms").val();
-            inputDataCollection['start_lease'] = start_lease;
-            inputDataCollection['end_lease'] = end_lease;
-            inputDataCollection['contract_code'] = 'CO_1';
-            // inputDataCollection['inputData'] = inputData;
-            console.log(inputDataCollection);
-            
-            $.ajax({
-                url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/generate',
-                type: 'post',
-                dataType: 'json',
-                data: JSON.stringify(inputDataCollection),
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                     var headcol = $('#tbl_ContractTerm' + ' thead tr th');
-                        var colid = [];
-                        for (var x in headcol) {
-                            if (headcol[x].className != undefined) {
-                                var y = headcol[x].className.split(' ');
-                                colid.push(y[0]);
-                            }
-                        }
-                    var datarow = [];
-                    var id = 0;
-                        $('#tbl_ContractTerm').DataTable().clear().draw();
-                        for (var i in data) {
-                           data[i].id = id++;
-                            var dataarr = [];
-                            for (var j in colid) {
-                                console.log(colid[j]);
-                              dataarr.push('<div style="text-align:left">' + data[i][colid[j]] + '</div>');                         
-                            }
-                            datarow.push(dataarr);
-                        }
-                        $('#tbl_ContractTerm').DataTable().rows.add(datarow).draw();
-                        toastr.success('Payment Schedule generated!');
-                },
-                error: function () {
-                    toastr.error('Error on saving data!');
-                    stopLoading();
-                }
-            })    
-    }
-
-function updatetable() {
-    var lease_period = $('#lease_period').val().split(' - ');
-    var start_lease = lease_period[0];
-    var end_lease = lease_period[1];
-    var inputDataCollection = {};
-    inputDataCollection['username'] = $("#username").val();
-    inputDataCollection['token'] = $("#token").val();
-    inputDataCollection['sysapp'] = sysapp;
-    inputDataCollection['start_of_payment'] = $(".start_of_payment").val();
-    inputDataCollection['advance_payment'] = $(".advance_payment").val();
-    inputDataCollection['lease_type'] = $(".lease_type").val();
-    inputDataCollection['payment_terms'] = $(".payment_terms").val();
-    inputDataCollection['start_lease'] = start_lease;
-    inputDataCollection['end_lease'] = end_lease;
-    inputDataCollection['contract_code'] = 'CO_1';
-    console.log(inputDataCollection);
-    $.ajax({
-        url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/generate',
-        type: 'post',
-        dataType: 'json',
-        data: JSON.stringify(inputDataCollection),
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-
-            $('#tbl_ContractTerm').DataTable().clear().draw();
-            var id = 0;
-            var tablerow = [];
-            for (var i in data) {
-                var tablearr = [];
-                data[i].id = id++;
-                tablearr.push(data[i].id);
-                // tablearr.push('<div style="text-align:left" data-rowid="' + data[i].id + '" data-colid="Payment_date">' + data[i].Payment_date+ '</div>');
-                tablearr.push('<input type="text" style="width: 100%;border:1px;" disabled  class="date updatedcell" data-rowid="' + data[i].id + '" data-colid="Payment_date" value="' + data[i].Payment_date + '">');
-                tablearr.push(data[i].status);
-                tablearr.push('<input type="text" style="width: 100%;border:1px; background-color:#D6DBDF;" id="amountNew" class="newAmount updatedcell" data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].amount + '">');
-
-
-                tablerow.push(tablearr);
-            }
-            $("#tbl_ContractTerm").DataTable().rows.add(tablerow).draw();
-
-        }
-    });
-}
-function getGeneratedSchedule()
-{      
-     var inputDataCollection = {};
-            inputDataCollection['username'] = $("#username").val();
-            inputDataCollection['token'] = $("#token").val();
-           // inputDataCollection['dataSource'] = dataSource;
-            inputDataCollection['sysapp'] = sysapp;
+        inputDataCollection['username'] = $("#username").val();
+        inputDataCollection['token'] = $("#token").val();
+        // inputDataCollection['dataSource'] = dataSource;
+        inputDataCollection['sysapp'] = sysapp;
+        inputDataCollection['start_of_payment'] = $(".start_of_payment").val();
+        inputDataCollection['advance_payment'] = $(".advance_payment").val();
+        inputDataCollection['lease_type'] = $(".lease_type").val();
+        inputDataCollection['payment_terms'] = $(".payment_terms").val();
+        inputDataCollection['start_lease'] = start_lease;
+        inputDataCollection['end_lease'] = end_lease;
         inputDataCollection['contract_code'] = 'CO_1';
+        // inputDataCollection['inputData'] = inputData;
         console.log(inputDataCollection);
-     $.ajax({
-        url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/getGeneratedSchedule',
-                type: 'post',
-                dataType: 'json',
-                data: JSON.stringify(inputDataCollection),
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-            $('#tbl_ContractTerm').DataTable().clear().draw();
-            var id = 1;
-            var tablerow = [];
-            for (var i in data) {
-                var tablearr = [];
-                 data[i].id = id++;
-                tablearr.push(data[i].id);
-                 var headcol = $('#tbl_ContractTerm' + ' thead tr th');
-                        var colid = [];
-                        for (var x in headcol) {
-                            if (headcol[x].className != undefined) {
-                                var y = headcol[x].className.split(' ');
-                                colid.push(y[0]);
-                            }
-                        }
-                    var datarow = [];
-                    var id = 1;
-                        $('#tbl_ContractTerm').DataTable().clear().draw();
-                        for (var i in data) {
-                           data[i].id = id++;
-                            var dataarr = [];
-                            for (var j in colid) {
-                                console.log(colid[j]);
-                              dataarr.push('<div style="text-align:left">' + data[i][colid[j]] + '</div>');                         
-                            }
-                            datarow.push(dataarr);
-                        }
-                        $('#tbl_ContractTerm').DataTable().rows.add(datarow).draw();
-            }
-        }
-    });
-}
-function saveupdateddata(){
-    $('.savebtn').prop('disabled',true);
-    alert("clicklerdsf")
-    for(var x in dataforsaving){
-        console.log($('[data-rowid='+ dataforsaving[x] +'][data-colid="Payment_date"]').val())
+
         $.ajax({
-            url:apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/updateAmount',
-            type:'post',
-            dataType:'json',
-            data:JSON.stringify({
-                contract_code:'CO_1',
-                amount:$('[data-rowid='+ dataforsaving[x] +'][data-colid="amount"]').val(),
-                date:$('[data-rowid='+ dataforsaving[x] +'][data-colid="Payment_date"]').val(),
-                username: $("#username").val(),
-                token: $("#token").val(),
-                sysapp: sysapp
-            }),
+            url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/generate',
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify(inputDataCollection),
             contentType: "application/json; charset=utf-8",
-            success:function(data){
-                getGeneratedSchedule();
-                toastr.success('Amount Saved!');
+            success: function (data) {
+                var headcol = $('#tbl_ContractTerm' + ' thead tr th');
+                var colid = [];
+                for (var x in headcol) {
+                    if (headcol[x].className != undefined) {
+                        var y = headcol[x].className.split(' ');
+                        colid.push(y[0]);
+                    }
+                }
+                var datarow = [];
+                var id = 0;
+                $('#tbl_ContractTerm').DataTable().clear().draw();
+                for (var i in data) {
+                    data[i].id = id++;
+                    var dataarr = [];
+                    for (var j in colid) {
+                        console.log(colid[j]);
+                        dataarr.push('<div style="text-align:left">' + data[i][colid[j]] + '</div>');
+                    }
+                    datarow.push(dataarr);
+                }
+                $('#tbl_ContractTerm').DataTable().rows.add(datarow).draw();
+                toastr.success('Payment Schedule generated!');
+            },
+            error: function () {
+                toastr.error('Error on saving data!');
+                stopLoading();
             }
         })
     }
-}
 
-  function initDataTablesContract() {
-    var table = $('#tbl_ContractTerm').DataTable({
-        language: {
-            sSearch: "",
-            searchPlaceholder: "Search records"
-           
-        },
-       selected:true,
-        paging: true,
-        lengthChange: false,
-        searching: false,
-        ordering: true,
-        info: true,
-        autoWidth: false,
-        responsive: true,
-        lengthMenu: [
-            [10, 25, 50, 100],
-            ['10 rows', '25 rows', '50 rows', '100 rows']
-        ],
-        
-    }).buttons().container().appendTo('#tbl_ContractTerm'  + '_wrapper .col-md-6:eq(0)');
-    $('#tbl_ContractTerm' + '_paginate').css('font-size', 'smaller').css('float', 'right');
-    $('#tbl_ContractTerm'  + '_filter').css('float', 'right');
+    function updatetable() {
+        var lease_period = $('#lease_period').val().split(' - ');
+        var start_lease = lease_period[0];
+        var end_lease = lease_period[1];
+        var inputDataCollection = {};
+        inputDataCollection['username'] = $("#username").val();
+        inputDataCollection['token'] = $("#token").val();
+        inputDataCollection['sysapp'] = sysapp;
+        inputDataCollection['start_of_payment'] = $(".start_of_payment").val();
+        inputDataCollection['advance_payment'] = $(".advance_payment").val();
+        inputDataCollection['lease_type'] = $(".lease_type").val();
+        inputDataCollection['payment_terms'] = $(".payment_terms").val();
+        inputDataCollection['start_lease'] = start_lease;
+        inputDataCollection['end_lease'] = end_lease;
+        inputDataCollection['contract_code'] = 'CO_1';
+        console.log(inputDataCollection);
+        $.ajax({
+            url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/generate',
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify(inputDataCollection),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+
+                $('#tbl_ContractTerm').DataTable().clear().draw();
+                var id = 0;
+                var tablerow = [];
+                for (var i in data) {
+                    var tablearr = [];
+                    data[i].id = id++;
+                    tablearr.push(data[i].id);
+                    // tablearr.push('<div style="text-align:left" data-rowid="' + data[i].id + '" data-colid="Payment_date">' + data[i].Payment_date+ '</div>');
+                    tablearr.push('<input type="text" style="width: 100%;border:1px;" disabled  class="date updatedcell" data-rowid="' + data[i].id + '" data-colid="Payment_date" value="' + data[i].Payment_date + '">');
+                    tablearr.push(data[i].status);
+                    tablearr.push('<input type="text" style="width: 100%;border:1px; background-color:#D6DBDF;" id="amountNew" class="newAmount updatedcell" data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].amount + '">');
 
 
-   
-}  
+                    tablerow.push(tablearr);
+                }
+                $("#tbl_ContractTerm").DataTable().rows.add(tablerow).draw();
 
-$('#tbl_ContractTerm').on('change', '.updatedcell', function () {
-    var table = $('#tbl_ContractTerm').DataTable();
-     console.log($(this).data('rowid'));
-    if (jQuery.inArray(($(this).data('rowid')), dataforsaving) == -1) {
-        console.log(jQuery.inArray($(this).data('rowid'),dataforsaving == 1  ));
-        dataforsaving.push($(this).data('rowid'));
+            }
+        });
     }
-})
+
+    function getGeneratedSchedule() {
+        var inputDataCollection = {};
+        inputDataCollection['username'] = $("#username").val();
+        inputDataCollection['token'] = $("#token").val();
+        // inputDataCollection['dataSource'] = dataSource;
+        inputDataCollection['sysapp'] = sysapp;
+        inputDataCollection['contract_code'] = 'CO_1';
+        console.log(inputDataCollection);
+        $.ajax({
+            url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/getGeneratedSchedule',
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify(inputDataCollection),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#tbl_ContractTerm').DataTable().clear().draw();
+                var id = 1;
+                var tablerow = [];
+                for (var i in data) {
+                    var tablearr = [];
+                    data[i].id = id++;
+                    tablearr.push(data[i].id);
+                    var headcol = $('#tbl_ContractTerm' + ' thead tr th');
+                    var colid = [];
+                    for (var x in headcol) {
+                        if (headcol[x].className != undefined) {
+                            var y = headcol[x].className.split(' ');
+                            colid.push(y[0]);
+                        }
+                    }
+                    var datarow = [];
+                    var id = 1;
+                    $('#tbl_ContractTerm').DataTable().clear().draw();
+                    for (var i in data) {
+                        data[i].id = id++;
+                        var dataarr = [];
+                        for (var j in colid) {
+                            console.log(colid[j]);
+                            dataarr.push('<div style="text-align:left">' + data[i][colid[j]] + '</div>');
+                        }
+                        datarow.push(dataarr);
+                    }
+                    $('#tbl_ContractTerm').DataTable().rows.add(datarow).draw();
+                }
+            }
+        });
+    }
+
+    function saveupdateddata() {
+        $('.savebtn').prop('disabled', true);
+        alert("clicklerdsf")
+        for (var x in dataforsaving) {
+            console.log($('[data-rowid=' + dataforsaving[x] + '][data-colid="Payment_date"]').val())
+            $.ajax({
+                url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/updateAmount',
+                type: 'post',
+                dataType: 'json',
+                data: JSON.stringify({
+                    contract_code: 'CO_1',
+                    amount: $('[data-rowid=' + dataforsaving[x] + '][data-colid="amount"]').val(),
+                    date: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Payment_date"]').val(),
+                    username: $("#username").val(),
+                    token: $("#token").val(),
+                    sysapp: sysapp
+                }),
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    getGeneratedSchedule();
+                    toastr.success('Amount Saved!');
+                }
+            })
+        }
+    }
+
+    function initDataTablesContract() {
+        var table = $('#tbl_ContractTerm').DataTable({
+            language: {
+                sSearch: "",
+                searchPlaceholder: "Search records"
+
+            },
+            selected: true,
+            paging: true,
+            lengthChange: false,
+            searching: false,
+            ordering: true,
+            info: true,
+            autoWidth: false,
+            responsive: true,
+            lengthMenu: [
+                [10, 25, 50, 100],
+                ['10 rows', '25 rows', '50 rows', '100 rows']
+            ],
+
+        }).buttons().container().appendTo('#tbl_ContractTerm' + '_wrapper .col-md-6:eq(0)');
+        $('#tbl_ContractTerm' + '_paginate').css('font-size', 'smaller').css('float', 'right');
+        $('#tbl_ContractTerm' + '_filter').css('float', 'right');
+    }
+
+    $('#tbl_ContractTerm').on('change', '.updatedcell', function () {
+        var table = $('#tbl_ContractTerm').DataTable();
+        console.log($(this).data('rowid'));
+        if (jQuery.inArray(($(this).data('rowid')), dataforsaving) == -1) {
+            console.log(jQuery.inArray($(this).data('rowid'), dataforsaving == 1));
+            dataforsaving.push($(this).data('rowid'));
+        }
+    })
 </script>
