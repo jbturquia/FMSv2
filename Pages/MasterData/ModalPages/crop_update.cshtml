@@ -26,29 +26,29 @@
     var dataSource = 'Crop';
     var dataSourceIdCol = 'CropCode';
     getSysData(dataSource, dataSourceIdCol);
-    $('.triggerdetail').on('change', function () {
-        var syscol = $(this)[0].className.split(' ');
-        $.ajax({
-            url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'common/updateSysData',
-            type: 'post',
-            dataType: 'json',
-            data: JSON.stringify({
-                username: $("#username").val(),
-                token: $("#token").val(),
-                dataSource: dataSource,
-                filter: dataSourceIdCol,
-                selectedid: $('.selectedid').data('id'),
-                syscol: syscol[0],
-                syscolval: $(this).val(),
-                sysapp: sysapp
-            }),
-            contentType: "application/json; charset=utf-8",
-            success: function () {
-                getSysAllData(dataSource);
-            },
-            error: function () {
-                toastr.error('Error on Updating!');
-            }
-        })
-    })
+    // $('.triggerdetail').on('change', function () {
+    //     var syscol = $(this)[0].className.split(' ');
+    //     $.ajax({
+    //         url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'common/updateSysData',
+    //         type: 'post',
+    //         dataType: 'json',
+    //         data: JSON.stringify({
+    //             username: $("#username").val(),
+    //             token: $("#token").val(),
+    //             dataSource: dataSource,
+    //             filter: dataSourceIdCol,
+    //             selectedid: $('.selectedid').data('id'),
+    //             syscol: syscol[0],
+    //             syscolval: $(this).val(),
+    //             sysapp: sysapp
+    //         }),
+    //         contentType: "application/json; charset=utf-8",
+    //         success: function () {
+    //             getSysAllData(dataSource);
+    //         },
+    //         error: function () {
+    //             toastr.error('Error on Updating!');
+    //         }
+    //     })
+    // })
 </script>
