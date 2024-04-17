@@ -544,7 +544,7 @@ function getOptDataForUpdate(dataSource, filter, id, name, selected) {
                     for (var i in data) {
                         RAWHTML += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
                     }
-                    $('.' + id + '.triggerdetail').html(RAWHTML);
+                    $('.' + id + '.triggerdetail').html(RAWHTML).select2();
                 },
                 error: function () {
                     toastr.error('Error on gathering Options!');
@@ -595,10 +595,11 @@ function getOptDataForAddAppend(optSource, optId, optName, RAWHTML) {
         }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
+            console.log(0);
             for (var i in data) {
                 RAWHTML += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
             }
-            $('.' + optSource + '.triggerdetail').html(RAWHTML);
+            $('.' + optSource + '.triggerdetail').html(RAWHTML).select2();
         },
         error: function () {
             toastr.error('Error on gathering Options!');
