@@ -1,0 +1,148 @@
+<section>
+    <div class="container-fluid">    
+        <div class="card card-lightblue">
+            <div class="card-header">
+                <h3 class="card-title">Contract Information</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    @*<button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>*@
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <!-- START: CONTRACT INFORMATION -->
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Land Contract Code</label>
+                                <input type="text" class="form-control form-control-sm form-control-border border-width-2" id="viewLandContractCode" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Land Information Code</label>
+                                <input type="text" class="form-control form-control-sm form-control-border border-width-2" id="viewLandInformationCode" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Document Type/Document Number</label>
+                                <input type="text" class="form-control form-control-sm form-control-border border-width-2" id="viewDocumentType" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Lot Number</label>
+                                <input type="text" class="form-control form-control-sm form-control-border border-width-2" id="viewLotNumber" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Landowner Name</label>
+                                <input type="text" class="form-control form-control-sm form-control-border border-width-2" id="viewLandowner" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Province</label>
+                                <input type="text" class="form-control form-control-sm form-control-border border-width-2" id="viewProvince" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Municipality/City</label>
+                                <input type="text" class="form-control form-control-sm form-control-border border-width-2" id="viewCity" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Barangay</label>
+                                <input type="text" class="form-control form-control-sm form-control-border border-width-2" id="viewBarangay" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Total Area<i> (sqm)</i></label>
+                                <input type="text" class="form-control form-control-sm form-control-border border-width-2" id="viewArea" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Plantation</label>
+                                <input disabled  class="form-control form-control-sm trigger" type="text" id="viewPlantation" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Company</label>
+                                <input disabled  class="form-control form-control-sm trigger" type="text" id="viewCompanyCode" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Authorized Representative</label>
+                                <textarea class="Representative form-control form-control-sm triggercontractinfo" id="repTextArea" id="viewRepresentative" readonly></textarea>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Heirs</label>
+                                <textarea class="Heirs form-control form-control-sm triggercontractinfo" id="heairTextArea" readonly></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label>Lease Period</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm float-right triggercontractinfo" id="viewlease_period" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Lease Term (Number of Years)</label>
+                                    <input type="text" class="terms reservationdate form-control form-control-sm float-right triggercontractinfo" id="viewLeaseTerm" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Advance Payment (Number of Years)</label>
+                                    <input class="advance_payment form-control form-control-sm" type="number" id="viewAdvancePayment" readonly>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label> Start of Payment:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="far fa-calendar-alt"></i>
+                                                </span>
+                                            </div>
+                                            <input type="text" class="viewStartOfPayment reservationdate form-control form-control-sm float-right triggercontractinfo" id="reservationdate" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Advance Payment Amount</label>
+                                    <input class="advance_payment_amount form-control form-control-sm triggerdetail triggercontractinfo" type="number" id="viewAmountOfAdvancePayment" readonly>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Payment Terms</label>
+                                    <input class="PaymentTermsCode form-control form-control-sm triggerdetail triggercontractinfo" type="text" id="viewPaymentTerm" readonly>
+                                </div>  
+                            </div>
+                            <!-- <div class="row">
+                                <div class="col-md-6">
+                                    <label>Total Contract Amount</label>
+                                    <input class="total_contract_amount form-control form-control-sm triggercontractinfo" type="number" id="viewTotalContractAmount" readonly>
+                                </div> 
+                            </div> -->
+                    </div>
+                <!-- END: CONTRACT INFORMATION -->
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</section>
+<script>
+    var sourceContract = 'ContractMain';
+    var dataSourceIdCol = 'LandContractCode';
+    viewContractInfoData(sourceContract, dataSourceIdCol);
+</script>

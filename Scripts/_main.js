@@ -308,7 +308,8 @@ function viewLoginUser() {
     })
 }
 
-//DATA CRUD start
+// DATA CRUD start
+
 function getSysData(dataSource, filter) {
     startLoading();
     var fields = $('.triggerdetail');
