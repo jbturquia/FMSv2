@@ -117,31 +117,35 @@
         </div>
         
         <div class="container">
-            <div class="">
-                <label class="labelwidth">Total Rental:</label>
-                <span class="Total_rental"></span>
+            <div class="col-md-12">
+                <div class="row">
+                       <div class="col-md-12">
+                            <label class="labelwidth">Total Rental:</label>
+                            <span class="Total_rental"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labelwidth">Less Amount:</label>
+                            <input class="advance_payment_amount" style="border:1px solid #ced4da">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labelwidth">Remaining Rental:</label>
+                            <span class="Remaining_rental"></span>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="dividedyrs labelwidth" for="divided"></label>
+                            <input class="yrsdivided" style="border:1px solid #ced4da">
+                        </div>
+                        <div class="col-md-12">
+                            <label class="labelwidth">Payment Amount:</label>
+                            <span class="Payment_Amount"></span>
+                        </div>
+                </div>
             </div>
-            <div class="">
-                <label class="labelwidth">Less Amount:</label>
-                <input class="advance_payment_amount" style="border:1px solid #ced4da">
-            </div>
-            <div class="">
-                <label class="labelwidth">Remaining Rental:</label>
-                <span class="Remaining_rental"></span>
-            </div>
-            <div class="">
-                <label class="labelwidth" for="divided"></label>
-                <input class="yrsdivided" style="border:1px solid #ced4da">
-            </div>
-            <div class="">
-                <label class="labelwidth">Payment Amount:</label>
-                <span class="Payment_Amount"></span>
-            </div>
-        </div>
-        <div class="col-md-12">
+            <div class="col-md-12">
             <div class="row">
-                <div class="card-body">
-                    <table id="tbl_summary" class="table table-bordered table-striped table-sm" style="width:100%">
+                <div class="col-md-12">
+                <label class="labelwidth">Rental Start:</label>
+                 <table id="tbl_summary" class="table table-bordered table-striped table-sm" style="width:100%">
                         <thead>
                             <tr style="text-align:center">
                                 <!-- <th hidden class="Payment_date">Payment_date</th> -->
@@ -161,6 +165,14 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="card-body">
+                    
+                </div>
                 <!-- <label class="labelwidth" style="margin-top: 5px;margin-left: 6px;">Rental Starting:</label>
                 <span class="start_of_payment rental"></span>
                 <span class="endlease rental"></span>
@@ -177,7 +189,7 @@
                         data-addpage="pages/masterdata/modalpages/area_add">
                         <thead>
                             <tr style="text-align:center">
-                                <th></th>
+                                <th>#</th>
                                 <th class="date_of_payment">Payment Schedule</th>
                                 <th class="remarks">Status</th>
                                 <th class="amount">Rate/Amount</th>
@@ -204,6 +216,7 @@
     getOptDataForPlantation();
     initDataTablesContract();
     $('.view').hide();
+    $('.yrsdivided').hide();
     var dataforsaving = [];
     $('#lease_period').daterangepicker({
         showDropdowns: true,
@@ -250,6 +263,7 @@
     function generatePaymentSched() {
         $('.yrsdivided').prop('disabled',true);
         $('.advance_payment_amount').prop('disabled',true);
+        $('.rate').prop('disabled',true);
         var lease_period = $('#lease_period').val().split(' - ');
         var start_lease = lease_period[0];
         var end_lease = lease_period[1];
@@ -540,14 +554,20 @@
     $('.PaymentTermsCode').change(function () {
         // Get the value of the selected option
         var selectedValue = $(this).find('option:selected').text();
+        
         if (selectedValue == 'Monthly') {
-            $("label[for='divided']").text("Divided by Months");
+            $('.yrsdivided').show();
+            $('.dividedyrs').show();
+            $("label[for='divided']").text("Divided by Months:");
         } else if (selectedValue == 'Annual') {
-            $("label[for='divided']").text("Divided by Years");
+            $("label[for='divided']").text("Divided by Years:");
+            $('.dividedyrs').show();
+            $('.yrsdivided').show();
         } else {
-            $("label[for='divided']").text("Divided by 5 Years");
+            $("label[for='divided']").text("Divided by 5 Years:");
+            $('.dividedyrs').show();
+            $('.yrsdivided').show();
         }
-        console.log(selectedValue);
     });
 
 
