@@ -93,9 +93,6 @@
                                     <th class="Cr_num">CR number</th>
                                     <th class="Posting_date">Date Posted</th>
                                     <th class="filename">Attachment</th>
-                                    <!-- <th class="modifiedby">Last Modified By</th>
-                                    <th class="modifiedon">Last Modified</th> -->
-
                                 </tr>
                             </thead>
                             <tbody id="tbl_Users-data">
@@ -178,45 +175,45 @@
                 for (var i in data) {
                     var tablearr = [];
                     data[i].id = id++;
-                    tablearr.push('<input type="text" disabled style="width: 100%;border:1px; background-color:#eaeaea;"  class="date_end  form-control form-control-sm updatedcell " data-rowid="' + data[i].id + '" data-colid="Payment_date_end" data-payment_date="' + data[i].Payment_date_end + '" value="' + data[i].Payment_date + '">');
+                    tablearr.push('<input type="text" disabled style="width: 100%;border:1px; background-color:#e9ecef;"  class="date_end  form-control form-control-sm updatedcell " data-rowid="' + data[i].id + '" data-colid="Payment_date_end" data-payment_date="' + data[i].Payment_date_end + '" value="' + data[i].Payment_date + '">');
                     if (data[i].remarks == 'Advance Payment Paid' && data[i].Amount != 0 && data[0].Cv_num == null) {
                         // tablearr.push('<input readonly style="border:1px; background-color:#eaeaea;" class="remarks form-control form-control-sm" value="' + data[i].remarks + '">');
-                        tablearr.push('<select style="border:1px; readonly background-color:#eaeaea;" class="remarks updatedcell form-control form-control-sm" data-rowid="' + data[i].id + '"><option disabled selected value="Advance Payment Paid">Advance Payment Paid</option></select>');
-                        tablearr.push('<input type="number" readonly style="width: 100%;border:1px; background-color:#eaeaea;" class="amount updatedcell " data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].Amount + '">');
-                        tablearr.push('<input type="text"  style="width: 100%; height:100%;border:1px; background-color:#D6DBDF;" class="cv  form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cv_num" >');
-                        tablearr.push('<input type="text" style="width: 100%; height:100%;border:1px; background-color:#D6DBDF;" class="cr form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cr_num" >');
-                        tablearr.push('<input type="date"  style="width: 100%; height:100%;border:1px; background-color:#D6DBDF;" class="datepost form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Posting_date" >');
+                        tablearr.push('<input readonly style="width: 100%;border:1px; background-color:#e9ecef;" class="remarks updatedcell" data-rowid="' + data[i].id + '" value="Advance Payment Paid">');
+                        tablearr.push('<input type="number" readonly style="width: 100%;border:1px; background-color:#e9ecef;" class="amount updatedcell " data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].Amount + '">');
+                        tablearr.push('<input type="text"  style="width: 100%; height:100%;border:1px; background-color:#FFFFFF;" class="cv  form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cv_num" >');
+                        tablearr.push('<input type="text" style="width: 100%; height:100%;border:1px; background-color:#FFFFFF;" class="cr form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cr_num" >');
+                        tablearr.push('<input type="date"  style="width: 100%; height:100%;border:1px; background-color:#FFFFFF;" class="datepost form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Posting_date" >');
                     } else if (data[i].remarks == 'Advance Payment Paid' && data[i].Amount == 0) {
-                        tablearr.push('<input readonly style="border:1px; background-color:#eaeaea;" class="remarks form-control form-control-sm" value="' + data[i].remarks + '">');
-                        tablearr.push('<input type="number" readonly style="width: 100%;border:1px; background-color:#eaeaea; " class="amount updatedcell " data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].Amount + '">');
+                        tablearr.push('<input readonly style="border:1px; background-color:#e9ecef;" class="remarks form-control form-control-sm" value="' + data[i].remarks + '">');
+                        tablearr.push('<input type="number" readonly style="width: 100%;border:1px; background-color:#e9ecef; " class="amount updatedcell " data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].Amount + '">');
                         tablearr.push('<input type="text" readonly  style="width: 100%; height:100%;border:1px;" class="cv  form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cv_num">');
                         tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px;" class="cr form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cr_num" >');
                         tablearr.push('<input type="text" readonly  style="width: 100%; height:100%;border:1px;" class="datepost form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Posting_date"  >');
                         tablearr.push('<input readonly style="width: 100%; height:100%;border:1px;" class="Init_Filename form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="filename" type="text" />');
                     }else if(data[i].remarks == 'Advance Payment Paid' && data[0].Cv_num != null)
                     {
-                        tablearr.push('<input readonly style="border:1px; background-color:#eaeaea;" class="remarks form-control form-control-sm" value="' + data[i].remarks + '">');
-                        tablearr.push('<input type="number"  readonly style="width: 100%;border:1px; background-color:#eaeaea;" class="amount updatedcell " data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].Amount + '">');
-                        tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px; background-color:#eaeaea;" class="cv  form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cv_num" value="' + data[i].Cv_num + '">');
-                        tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px; background-color:#eaeaea;" class="cr form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cr_num" value="' + data[i].Cr_num + '">');
-                        tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px; background-color:#eaeaea;" class="datepost form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Posting_date" value="' + moment(data[i].Posting_date).format("MM/DD/YYYY") + '" >');
+                        tablearr.push('<input readonly style="border:1px; background-color:#e9ecef;" class="remarks form-control form-control-sm" value="' + data[i].remarks + '">');
+                        tablearr.push('<input type="number"  readonly style="width: 100%;border:1px; background-color:#e9ecef;" class="amount updatedcell " data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].Amount + '">');
+                        tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px; background-color:#e9ecef;" class="cv  form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cv_num" value="' + data[i].Cv_num + '">');
+                        tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px; background-color:#e9ecef;" class="cr form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cr_num" value="' + data[i].Cr_num + '">');
+                        tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px; background-color:#e9ecef;" class="datepost form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Posting_date" value="' + moment(data[i].Posting_date).format("MM/DD/YYYY") + '" >');
                         tablearr.push('<button type="button" class="btnview btn btn-success" onclick="viewAttachment(\'' + data[i].filename + '\')">View Attachment</button >');
 
                     
                     }else if (data[i].remarks == 'Paid') {
-                        tablearr.push('<input readonly style="border:1px; background-color:#eaeaea;" class="remarks updatedcell form-control form-control-sm" data-rowid="' + data[i].id + '" value="' + data[i].remarks + '">');
-                        tablearr.push('<input type="number" readonly style="width: 100%;border:1px;  background-color:#eaeaea;" class="amount form-control form-control-sm updatedcell unpaid" data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].Amount + '">');
-                        tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px; background-color:#eaeaea;" class="cv  form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cv_num" value="' + data[i].Cv_num + '">');
-                        tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px; background-color:#eaeaea;" class="cr form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cr_num" value="' + data[i].Cr_num + '" >');
-                        tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px; background-color:#eaeaea;" class="datepost form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Posting_date" value="' + moment(data[i].Posting_date).format("MM/DD/YYYY") + '" >');
+                        tablearr.push('<input readonly style="border:1px; background-color:#e9ecef;" class="remarks updatedcell form-control form-control-sm" data-rowid="' + data[i].id + '" value="' + data[i].remarks + '">');
+                        tablearr.push('<input type="number" readonly style="width: 100%;border:1px;  background-color:#e9ecef;" class="amount form-control form-control-sm updatedcell unpaid" data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].Amount + '">');
+                        tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px; background-color:#e9ecef;" class="cv  form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cv_num" value="' + data[i].Cv_num + '">');
+                        tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px; background-color:#e9ecef;" class="cr form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cr_num" value="' + data[i].Cr_num + '" >');
+                        tablearr.push('<input type="text" readonly style="width: 100%; height:100%;border:1px; background-color:#e9ecef;" class="datepost form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Posting_date" value="' + moment(data[i].Posting_date).format("MM/DD/YYYY") + '" >');
                        tablearr.push('<button type="button" class="btnview btn btn-success" onclick="viewAttachment(\'' + data[i].filename + '\')">View Attachment</button >');
                    } else {
 
-                        tablearr.push('<select style="border:1px; background-color:#eaeaea;" class="remarks updatedcell form-control form-control-sm" data-rowid="' + data[i].id + '"><option disabled selected value="Advance Payment Paid">' + data[i].remarks + '</option><option data-remarks="' + data[i].remarks + '" value="Paid">Paid</option><option value="Unpaid">Unpaid</option></select>');
-                        tablearr.push('<input type="number" disabled style="width: 100%;border:1px;  background-color:#eaeaea;" class="amount form-control form-control-sm updatedcell unpaid" data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].Amount + '">');
-                        tablearr.push('<input type="text"  style="width: 100%; height:100%;border:1px; background-color:#D6DBDF;" class="cv  form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cv_num">');
-                        tablearr.push('<input type="text"  style="width: 100%; height:100%;border:1px; background-color:#D6DBDF;" class="cr form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cr_num" >');
-                        tablearr.push('<input type="date"  style="width: 100%; height:100%;border:1px; background-color:#D6DBDF;" class="datepost form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Posting_date" >');
+                        tablearr.push('<select style="border:1px; background-color:#FFFFFF;" class="remarks updatedcell form-control form-control-sm" data-rowid="' + data[i].id + '"><option disabled selected value="Paid">' + data[i].remarks + '</option><option data-remarks="' + data[i].remarks + '" value="Paid">Paid</option><option value="Unpaid">Unpaid</option></select>');
+                        tablearr.push('<input type="number" disabled style="width: 100%;border:1px;  background-color:#e9ecef;" class="amount form-control form-control-sm updatedcell unpaid" data-rowid="' + data[i].id + '" data-colid="amount" value="' + data[i].Amount + '">');
+                        tablearr.push('<input type="text"  style="width: 100%; height:100%;border:1px; background-color:#FFFFFF;" class="cv  form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cv_num">');
+                        tablearr.push('<input type="text"  style="width: 100%; height:100%;border:1px; background-color:#FFFFFF;" class="cr form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Cr_num" >');
+                        tablearr.push('<input type="date"  style="width: 100%; height:100%;border:1px; background-color:#FFFFFF;" class="datepost form-control form-control-sm updatedcell" data-rowid="' + data[i].id + '" data-colid="Posting_date" >');
                     }
                     // tablearr.push(data[i].modifiedby);
                     // tablearr.push(data[i].modifiedon);
@@ -237,37 +234,45 @@
    }
 
     function saveData() {
-        for (var z in dataupload)  {
-             console.log(dataupload[z].rowid);
-            // var test = $('[data-rowid=' + dataupload[z].rowid + '][data-colid="filename"]').val(dataupload[z].filename);
-        for (var x in dataforsaving) {
-            console.log(dataforsaving[x]);
-            $.ajax({
-                url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/updatePaymentSchedule',
-                type: 'post',
-                dataType: 'json',
-                data: JSON.stringify({
-                    LandContractCode: $('#LandContractCode').val(), // add contract_code value or landinformation code
-                    // LandInformationCode:,
-                    remarks: $('[data-rowid=' + dataforsaving[x] + '] option:selected').val(),
-                    amount: $('[data-rowid=' + dataforsaving[x] + '][data-colid="amount"]').val(),
-                    Cv_num: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Cv_num"]').val(),
-                    Cr_num: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Cr_num"]').val(),
-                    date: $('[data-rowid=' + dataforsaving[x] + ']').data('payment_date'),
-                    Posting_date: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Posting_date"]').val(),
-                    filename:dataupload[z].filename,
-                    username: $("#username").val(),
-                    token: $("#token").val(),
-                    sysapp: sysapp
-                }),
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
+
+        if (confirm('Do you want to save changes?')) {
+            for (var z in dataupload) {
+                console.log(dataupload[z].rowid);
+                // var test = $('[data-rowid=' + dataupload[z].rowid + '][data-colid="filename"]').val(dataupload[z].filename);
+                for (var x in dataforsaving) {
+                    console.log(dataforsaving[x]);
+                    $.ajax({
+                        url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/updatePaymentSchedule',
+                        type: 'post',
+                        dataType: 'json',
+                        data: JSON.stringify({
+                            LandContractCode: $('#LandContractCode').val(), // add contract_code value or landinformation code
+                            // LandInformationCode:,
+                            remarks: $('[data-rowid=' + dataforsaving[x] + '] option:selected').val(),
+                            amount: $('[data-rowid=' + dataforsaving[x] + '][data-colid="amount"]').val(),
+                            Cv_num: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Cv_num"]').val(),
+                            Cr_num: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Cr_num"]').val(),
+                            date: $('[data-rowid=' + dataforsaving[x] + ']').data('payment_date'),
+                            Posting_date: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Posting_date"]').val(),
+                            filename: dataupload[z].filename,
+                            username: $("#username").val(),
+                            token: $("#token").val(),
+                            sysapp: sysapp
+                        }),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {}
+                    })
                 }
-            })
+            }
+            toastr.success('Data Saved!');
+             hideModal();
+        }
+        else
+        {
+            toastr.error('Cancelled!');
             
         }
-        }
-        toastr.success('Data Saved!');
+        
     }
       $('#tbl_PaymentSched').on('change','#fileUploader' ,function() {
         // Get the selected file
@@ -277,7 +282,6 @@
             console.log(input && input.length > 0);
             if (input && input.length > 0) {
                 var formData = new FormData();
-                alert(1);
                 for (var i = 0; i < input.length; i++) {
                     console.log(input[i]);
                     formData.append("file" + i, input[i]);
