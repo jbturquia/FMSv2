@@ -83,12 +83,18 @@ function saveLandInformationData(sourceLandInformation) {
     var fieldID = [];
     var inputData = {};
     var inputDataCollection = {};
+    var owners = 0;
+    var coowners = '';
+
     for (var x in fields) {
         if (fields[x].className != undefined) {
             var y = fields[x].className.split(' ');
             fieldID.push(y[0]);
         }
     }
+
+    owners = $('.checkCoOwners').is(":checked") == true ? 1 : 0;
+    coowners = $('.checkCoOwners').is(":checked") == false ? null : $('#textareaCoOwner').val();
 
     if (confirm('Save Landowner data?')) {
         inputDataCollection['username'] = $("#username").val();
@@ -97,6 +103,8 @@ function saveLandInformationData(sourceLandInformation) {
         inputDataCollection['sysapp'] = sysapp;
         inputData['cityCode'] = $('.cityCode').val();
         inputData['barangayCode'] = $('.barangayCode').val();
+        inputData['CoOwner'] = coowners;
+        inputData['WithCoOwner'] = owners;
         for (var j in fieldID) {
             inputData[fieldID[j]] = $('.triggerlandinformation.' + fieldID[j]).val();
             $('.triggerlandinformation.' + fieldID[j]).val('');
@@ -344,6 +352,12 @@ function getSysLandInformationData(sourceLandInformation, filter) {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             console.log('land information update', data);
+
+            if ( data.WithCoOwner == false) {
+                $('.hideCoOwner').hide();
+            } else {
+                $('.hideCoOwner').show();
+            }
 
             if ( data.DocumentTypeCode != 3 ) {
                 $('#hideRemarks').hide();

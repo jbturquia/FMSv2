@@ -16,14 +16,23 @@
             <div class="card-body">
                 <!-- START: CONTRACT INFORMATION -->
                 <div class="col-md-12">
+                    <div class="col-md-12 bg-light headertext">
+                        <h5>Basic Information</h5>
+                    </div>
                     <div class="row">
                         <div class="col-md-4">
                             <label>Landowner/Company</label>
                             <!-- <input type="text" class="form-control form-control-sm form-control-border border-width-2" id="viewLandowner" readonly> -->
                             <select
                                 class="LandownerCode FullName Landowner form-control form-control-sm triggercontractinfo select2"
-                                type="text" id="viewLandowner">
+                                type="text" id="viewLandowner" onChange="clearSelection('.plantationClear')">
                             </select>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="form-control form-control-sm form-control-border border-width-2"
+                                style="border-color: white;"></span>
+                            <span class="form-control form-control-sm form-control-border border-width-2"
+                                id="viewWithCoOwner"></span>
                         </div>
                         <div class="col-md-4">
                             <label>Land Information/Document</label>
@@ -31,11 +40,20 @@
                                 id="viewLandInformation" disabled>
                             </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <label>Lot Number</label>
                             <span class="form-control form-control-sm form-control-border border-width-2"
                                 id="viewLotNumber"></span>
                             <!-- <input type="text" class="form-control form-control-sm form-control-border border-width-2" id="viewLotNumber" readonly> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 hideCoOwner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Co-Owner</label>
+                            <textarea class="CoOwner form-control form-control-sm" placeholder="-" autocomplete="off"
+                                id="viewCoOwner" readonly></textarea>
                         </div>
                     </div>
                 </div>
@@ -63,11 +81,6 @@
                 </div>
                 <div class="col-md-12">
                     <div class="row">
-                        @*<div class="col-md-4">
-                            <label>Land Contract Code</label>
-                            <input class="LandContractCode form-control form-control-sm triggercontractinfo" value="0"
-                                type="text" hidden>
-                        </div>*@
                         <div class="col-md-4">
                             <label>Total Area<i> (sqm)</i></label>
                             <span class="form-control form-control-sm form-control-border border-width-2"
@@ -77,8 +90,8 @@
                         <div class="col-md-4">
                             <label>Plantation</label>
                             <select
-                                class="username PlantationCode PlantationMapping form-control form-control-sm trigger"
-                                id="plantationSelect" disabled>
+                                class="username PlantationCode PlantationMapping form-control form-control-sm trigger select2 plantationClear"
+                                id="plantationSelect">
                             </select>
                         </div>
                         <div class="col-md-4">
@@ -90,48 +103,89 @@
                     </div>
                 </div>
                 <div class="col-md-12">
+                    <br>
+                    <div class="col-md-12 bg-light headertext">
+                        <h5>Representative</h5>
+                    </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <label>Authorized Representative</label>
-                            <!-- <input type="text" class="Representative form-control form-control-sm form-control-border border-width-2 triggercontractinfo" id="viewRepresentative"> -->
-                            <textarea class="Representative form-control form-control-sm triggercontractinfo"
-                                placeholder="(e.g John B. Doe, Anna N. Lee)" id="repTextArea" autocomplete="off"
-                                id="viewRepresentative" disabled></textarea>
+                        <div class="col-md-12 hideRepresentative">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group clearfix">
+                                                <div class="icheck-lightblue d-inline">
+                                                    <input type="checkbox" id="isRep" class="checkRepresentative">
+                                                    <label for="isRep">is the Landowner same as the Authorize Representative?</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 hideRepresentativeLabel">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label>Name</label>
+                                            <input type="text" class="RepName form-control form-control-sm">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>Contact Number</label>
+                                            <input type="text" class="RepContactNumber form-control form-control-sm">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>Email</label>
+                                            <input type="text" class="RepEmail form-control form-control-sm">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="row">
+                    <br>
+                    <div class="col-md-12 bg-light headertext">
+                        <h5>Area to be Contracted</h5>
+                    </div>
+                    <div class="row flort-right">
                         <div class="col-md-6">
+                            <label>Total Area Remaining <i>(sqm)</i></label>
+                            <input type="text"
+                                class="Hectare form-control form-control-sm form-control-border border-width-2 triggercontractinfo"
+                                id="Remaining" step='0.01' min="1" placeholder='0.00' type="number" disabled>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Area to be contracted per <i>(has)</i></label>
+                            <input type="text"
+                                class="Hectare form-control form-control-sm form-control-border border-width-2 triggercontractinfo"
+                                id="Hectares" step='0.01' min="1" placeholder='0.00' type="number" disabled>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
                             <label>Area to be contracted per <i>(sqm)</i></label>
                             <input type="text"
                                 class="LandContractedArea form-control form-control-sm form-control-border border-width-2 triggercontractinfo"
                                 id="Sqm" step='0.01' min="1" max="1000000" placeholder='0.00' type="number"
                                 onkeyup=imposeMinMax(this) disabled>
                         </div>
-                        <div class="col-md-3">
-                            <label>Area to be contracted per <i>(has)</i></label>
-                            <input type="text"
-                                class="Hectare form-control form-control-sm form-control-border border-width-2 triggercontractinfo"
-                                id="Hectares" step='0.01' min="1" placeholder='0.00' type="number"
-                                onkeyup=imposeMinMax(this) disabled>
+                        <br>
+                        <br>
+                        <div class="col-md-12 bg-light headertext">
+                            <h5>Attachment</h5>
                         </div>
-                        <div class="col-md-3">
-                            <label>Total Area Remaining <i>(sqm)</i></label>
-                            <input type="text"
-                                class="Hectare form-control form-control-sm form-control-border border-width-2 triggercontractinfo"
-                                id="Remaining" step='0.01' min="1" placeholder='0.00' type="number" disabled>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Heirs</label>
-                                <textarea class="Heirs form-control form-control-sm triggercontractinfo" placeholder="(e.g John B. Doe, Anna N. Lee)" autocomplete="off" id="heairTextArea" disabled></textarea>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="file">Attach Document</label>
+                                    <input id="fileUploader" name="file"
+                                        class="Init_Filename form-control form-control-sm triggerdetail" type="file" multiple />
+                                </div>
                             </div>
                         </div>
-                    </div> -->
+                        
+                    </div>
+                </div>
                 <!-- END: CONTRACT INFORMATION -->
             </div>
             <!-- /.card-body -->
@@ -139,7 +193,7 @@
     </div>
 </section>
 
-<section>
+<!-- <section>
     <div class="container-fluid">
         <div class="card card-lightblue">
             <div class="card-header">
@@ -148,15 +202,12 @@
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                     </button>
-                    @*<button type="button" class="btn btn-tool" data-card-widget="remove">
-                        <i class="fas fa-times"></i>
-                    </button>*@
                 </div>
-            </div>
+            </div> -->
             <!-- /.card-header -->
-            <div class="card-body">
+            <!-- <div class="card-body"> -->
                 <!-- START: CONTRACT INFORMATION -->
-                <div class="col-md-12">
+                <!-- <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-12">
                             <label for="file">Attach Document</label>
@@ -164,13 +215,13 @@
                                 class="Init_Filename form-control form-control-sm triggerdetail" type="file" multiple />
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- END: CONTRACT INFORMATION -->
-            </div>
+            <!-- </div> -->
             <!-- /.card-body -->
-        </div>
+        <!-- </div>
     </div>
-</section>
+</section> -->
 
 <section>
     <div class="container-fluid">
@@ -213,7 +264,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label>Years of Advance Payment</label>
-                                    <input class="advance_payment form-control form-control-sm" type="number"
+                                    <input class="advance_payment form-control form-control-sm " type="number"
                                         Placeholder="Input Number of Year(s)">
                                 </div>
                             </div>
@@ -270,41 +321,76 @@
                                             <tbody id="tbl_Users-data">
                                             </tbody>
                                         </table>
+                                        <tfoot>
+                                            <div class="col-md-12">
+                                                <button type="button" class="btn btn-success" onclick="generateEscalation()">Generate Escalation</button>
+                                            </div>
+                                            
+                                            <!-- <tr>
+                                                <td>Sum</td>
+                                                <td>$180</td>
+                                            </tr> -->
+                                        </tfoot>
                                     </div>
                                 </div>
                             </div>
                             <!-- insert table end -->
                             <div class="container">
-                                <div class="">
-                                    <label class="labelwidth">Total Rental:</label>
-                                    <span class="Total_rental"></span>
-                                </div>
-                                <div class="">
-                                    <label class="labelwidth">Less Amount:</label>
-                                    <input class="advance_payment_amount" style="border:1px solid #ced4da">
-                                </div>
-                                <div class="">
-                                    <label class="labelwidth">Remaining Rental:</label>
-                                    <span class="Remaining_rental"></span>
-                                </div>
-                                <div class="">
-                                    <label class="labelwidth" for="divided"></label>
-                                    <input class="yrsdivided" style="border:1px solid #ced4da">
-                                </div>
-                                <div class="">
-                                    <label class="labelwidth">Payment Amount:</label>
-                                    <span class="Payment_Amount"></span>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <label class="labelwidth" style="margin-top: 5px;margin-left: 6px;">Rental Starting:</label>
-                                    <!-- <span class="rentstart" style="border:solid 1px;"></span> -->
-                                    <span class="start_of_payment rental"></span>
-                                    <span class="endlease rental"></span>
-                                    <span class="hectares rental "></span>
-                                    <span class="Payment_Amount"
-                                        style=" border: solid 1px;padding: 5px;width: 100px; text-align:center;"></span>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="labelwidth">Rental Start:</label>
+                                            <table id="tbl_summary" class="table table-bordered table-striped table-sm"
+                                                style="width:100%">
+                                                <thead>
+                                                    <tr style="text-align:center">
+                                                        <!-- <th hidden class="Payment_date">Payment_date</th> -->
+                                                        <th class="">Start Term</th>
+                                                        <th class="">End Term</th>
+                                                        <th class="Num_of_has">Hectares</th>
+                                                        <th class="Rate_per_year">Payment Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><span class="start_of_payment"></span></td>
+                                                        <td><span class="endlease"></span></td>
+                                                        <td><span class="hectares"></span></td>
+                                                        <td><span class="Payment_Amount"></span></td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <label class="labelwidth">Total Rental:</label>
+                                                                <span class="Total_rental"></span>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label class="labelwidth">Advance Payment:</label>
+                                                                <input class="advance_payment_amount maskAmount" style="border:1px solid #ced4da">
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label class="labelwidth">Remaining Rental:</label>
+                                                                <span class="Remaining_rental"></span>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label class="dividedyrs labelwidth" for="divided"></label>
+                                                                <input class="yrsdivided" style="border:1px solid #ced4da">
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label class="labelwidth">Payment Amount:</label>
+                                                                <span class="Payment_Amount"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </tfoot>
+                                            </table>
+                                            <div class="col-md-12">
+                                                <button type="button" class="view btn btn-success" onclick="generatePaymentSched()"> View Payment Schedule </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <!-- insert table start -->
@@ -317,6 +403,7 @@
                                             <thead>
                                                 <tr style="text-align:center">
                                                     <!-- <th hidden class="id">Term</th> -->
+                                                    <th class="term">#</th>
                                                     <th class="Payment_date">Payment Schedule</th>
                                                     <th class="remarks">Status</th>
                                                     <th class="amount">Rate/Amount</th>
@@ -333,12 +420,9 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
-                <div class="col-md-12">
-                    <button type="button" class="btn btn-success" onclick="generateEscalation()">Generate Escalation</button>
-                    <button type="button" class="btn btn-success" onclick="generatePaymentSched()"> View Payment Schedule </button>
-                </div>
-            </div>
+            <!-- <div class="card-footer">
+                
+            </div> -->
         </div>
     </div>
 </section>
@@ -347,12 +431,19 @@
     var sourceContract = 'ContractMain';
     var dataSourceIdCol = 'LandContractCode';
     var dataforsaving = [];
+    var LOContact = '';
+    var LOName = '';
+    var LOEmail = '';
     getOptDataForAddContractInfo();
     initDataTablesContract();
     initDataTablesEscalation();
     getOptDataForPlantation();
+    $('.hideCoOwner').hide();
+    // $('.hideRepresentativeLabel').hide();
+    $('.view').hide();
+    $('.yrsdivided').hide();
 
-/////////////////////////////////////////////////////////////////////////////START: LEASE PERIOD/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////START: LEASE PERIOD/////////////////////////////////////////////////////////////////////////////
     $('#lease_period').daterangepicker({
         showDropdowns: true,
         minYear: 1950,
@@ -374,9 +465,9 @@
         var years = parseInt(days / 365);
         $('#terms').val(years);
     });
-/////////////////////////////////////////////////////////////////////////////END: LEASE PERIOD/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////END: LEASE PERIOD/////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////START: START OF PAYMENT DATE QUERY/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////START: START OF PAYMENT DATE QUERY/////////////////////////////////////////////////////////////////////////////
     $('#reservationdate').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
@@ -397,10 +488,13 @@
     $('#reservationdate').on('cancel.daterangepicker', function (ev, picker) {
         $(this).val('');
     });
-/////////////////////////////////////////////////////////////////////////////END: START OF PAYMENT DATE QUERY/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////END: START OF PAYMENT DATE QUERY/////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////START: GENERATE PAYMENT SCHEDULE/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////START: GENERATE PAYMENT SCHEDULE/////////////////////////////////////////////////////////////////////////////
     function generatePaymentSched() {
+        $('.yrsdivided').prop('disabled',true);
+        $('.advance_payment_amount').prop('disabled',true);
+        $('.rate').prop('disabled',true);
         var lease_period = $('#lease_period').val().split(' - ');
         var start_lease = lease_period[0];
         var end_lease = lease_period[1];
@@ -424,9 +518,6 @@
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $('#tbl_ContractTerm').DataTable().clear().draw();
-                $('.Total_rental').text('');
-                $('.Remaining_rental').text('');
-                $('.Total_rental').text('');
                 var id = 0;
                 var tablerow = [];
                 //landcontractcode   
@@ -435,7 +526,7 @@
                 for (var i in data) {
                     var tablearr = [];
                     data[i].id = id++;
-                    // tablearr.push(data[i].id);
+                    tablearr.push(data[i].term);
                     // tablearr.push('<input type="text" style="width: 100%;border:1px;" hidden  class="date updatedcell " data-rowid="' + data[i].id + '" data-colid="Payment_date" value="' + moment(data[i].Payment_date ).format('MM/DD/YYYY') + '">');
                     tablearr.push('<input type="text" style="width: 100%;border:1px;" disabled  class="date_end updatedcell " data-rowid="' + data[i].id + '" data-colid="Payment_date_end" data-payment_date="' + data[i].Payment_date + '" value="' + data[i].date_of_payment + '">');
                     tablearr.push(data[i].remarks);
@@ -452,8 +543,16 @@
             }
         });
     }
+
     function generateEscalation() {
-         
+        $('.yrsdivided').prop('disabled',false);
+        $('.advance_payment_amount').prop('disabled',false);
+        $('.Total_rental').text(''); 
+        $('.advance_payment_amount').val(''); 
+        $('.Remaining_rental').text(''); 
+        $('.yrsdivided').val(''); 
+        $('.Payment_Amount').text('');
+        $('.view').show();
         var lease_period = $('#lease_period').val().split(' - ');
         var start_lease = lease_period[0];
         var end_lease = lease_period[1];
@@ -463,7 +562,7 @@
         inputDataCollection['sysapp'] = sysapp;
         inputDataCollection['start_of_payment'] = $(".start_of_payment").val();
         inputDataCollection['advance_payment'] = $(".advance_payment").val();
-        inputDataCollection['PaymentTerms'] = $(".PaymentTerms").val();
+        inputDataCollection['PaymentTerms'] = $(".PaymentTermsCode").val();
         inputDataCollection['start_lease'] = start_lease;
         inputDataCollection['end_lease'] = end_lease;
         inputDataCollection['advance_payment_amount'] = $(".advance_payment_amount").val();
@@ -487,7 +586,7 @@
                     var tablearr = [];
                     data[i].id = id++;
                     tablearr.push('<input type="text" style="width: 100%;border:1px;" disabled  class="StartTerm updatedcell " data-rowid="' + data[i].id + '" data-colid="startterm" data-startterm="' + data[i].StartTerm + '" value="' + data[i].date_of_payment + '">');
-                    tablearr.push('<input type="number"  style="width:100%; border:1px solid #ced4da" "  class="rate updatedcell " data-rowid="' + data[i].id + '" data-colid="rate" value="' + data[i].Rate + '">');
+                    tablearr.push('<input type="number"  style="width:100%; border:1px solid #ced4da" " id="amountNew" class="rate updatedcell " data-rowid="' + data[i].id + '" data-colid="rate" value="' + data[i].Rate + '">');
                     tablearr.push('<input disabled type="number" style="border:none; text-align:center;" class="Num_of_has" data-rowid="' + data[i].id + '" data-colid="Num_of_has" value="' + data[i].Num_of_has + '">');
                     tablearr.push('<input disabled type="number" style="border:none; text-align:center;" id="rateperyear" data-rowid="' + data[i].id + '" data-colid="Rate_per_year" >');
                     tablearr.push('<input disabled type="number" style="border:none; text-align:center;"  data-rowid="' + data[i].id + '" data-colid="Total_rate" >');
@@ -497,10 +596,10 @@
             }
         });
     }
-/////////////////////////////////////////////////////////////////////////////END: GENERATE PAYMENT SCHEDULE/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////END: GENERATE PAYMENT SCHEDULE/////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////START: INITIALIZE CONTRACT PAYMENT TABLE///////////////////////////////////////////////////////////////////
-function initDataTablesContract() {
+    /////////////////////////////////////////////////////////////////////////////START: INITIALIZE CONTRACT PAYMENT TABLE///////////////////////////////////////////////////////////////////
+    function initDataTablesContract() {
         var table = $('#tbl_ContractTerm').DataTable({
             language: {
                 sSearch: "",
@@ -511,7 +610,7 @@ function initDataTablesContract() {
             lengthChange: false,
             searching: false,
             ordering: true,
-            info: true,
+            info: false,
             autoWidth: false,
             responsive: true,
             lengthMenu: [
@@ -523,6 +622,7 @@ function initDataTablesContract() {
         $('#tbl_ContractTerm' + '_paginate').css('font-size', 'smaller').css('float', 'right');
         $('#tbl_ContractTerm' + '_filter').css('float', 'right');
     }
+
     function initDataTablesEscalation() {
         var table = $('#tbl_Escalation').DataTable({
             language: {
@@ -534,7 +634,7 @@ function initDataTablesContract() {
             lengthChange: false,
             searching: false,
             ordering: true,
-            info: true,
+            info: false,
             autoWidth: false,
             responsive: true,
             lengthMenu: [
@@ -546,11 +646,13 @@ function initDataTablesContract() {
         $('#tbl_Escalation' + '_paginate').css('font-size', 'smaller').css('float', 'right');
         $('#tbl_Escalation' + '_filter').css('float', 'right');
     }
-   $('#tbl_Escalation').on('change', '.updatedcell', function () {
+    $('#tbl_Escalation').on('change', '.updatedcell', function () {
         var table = $('#tbl_Escalation').DataTable();
+        // console.log($(this).data('rowid'));
         console.log(dataforsaving);
         console.log($(this).data('rowid'));
         if (jQuery.inArray(($(this).data('rowid')), dataforsaving) == -1) {
+            // console.log(jQuery.inArray($(this).data('rowid'), dataforsaving == 1));
             dataforsaving.push($(this).data('rowid'));
         }
         var nums = [];
@@ -608,21 +710,28 @@ function initDataTablesContract() {
             $('.hectares').text(has.toString());
             $('.Payment_Amount').text(payment_amount.toString());
         });
-    })
+    });
     $('.PaymentTermsCode').change(function () {
         // Get the value of the selected option
         var selectedValue = $(this).find('option:selected').text();
+        
         if (selectedValue == 'Monthly') {
-            $("label[for='divided']").text("Divided by Months");
+            $('.yrsdivided').show();
+            $('.dividedyrs').show();
+            $("label[for='divided']").text("Divided by Months:");
         } else if (selectedValue == 'Annual') {
-            $("label[for='divided']").text("Divided by Years");
+            $("label[for='divided']").text("Divided by Years:");
+            $('.dividedyrs').show();
+            $('.yrsdivided').show();
         } else {
-            $("label[for='divided']").text("Divided by 5 Years");
+            $("label[for='divided']").text("Divided by 5 Years:");
+            $('.dividedyrs').show();
+            $('.yrsdivided').show();
         }
     });
-/////////////////////////////////////////////////////////////////////////////END: INITIALIZE CONTRACT PAYMENT TABLE/////////////////////////////////////////////////////////////////////////////
-    
-/////////////////////////////////////////////////////////////////////////////START: SAVE UPDATE DATA/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////END: INITIALIZE CONTRACT PAYMENT TABLE/////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////START: SAVE UPDATE DATA/////////////////////////////////////////////////////////////////////////////
     function saveupdateddata() {
         for (var x in dataforsaving) {
             console.log($('[data-rowid=' + dataforsaving[x] + '][data-colid="Payment_date"]').data());
@@ -631,11 +740,12 @@ function initDataTablesContract() {
                 type: 'post',
                 dataType: 'json',
                 data: JSON.stringify({
-                     LandContractCode:$('#LandContractCode').val(), // add contract_code value or landinformation code
+                    LandContractCode: $('#LandContractCode')
+                .val(), // add contract_code value or landinformation code
                     // LandInformationCode:,
                     amount: $('[data-rowid=' + dataforsaving[x] + '][data-colid="amount"]').val(),
-                    // date: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Payment_date"]').val(),
-                    date:$('[data-rowid=' + dataforsaving[x] + '][data-colid="Payment_date_end"]').data('payment_date'),
+                    date: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Payment_date_end"]')
+                        .data('payment_date'),
                     username: $("#username").val(),
                     token: $("#token").val(),
                     sysapp: sysapp
@@ -646,8 +756,9 @@ function initDataTablesContract() {
                 }
             })
         }
-        toastr.success('Amount Saved!');
+        // toastr.success('Amount Saved!');
     }
+
     function saveEscalation() {
         console.log($('#LandContractCode').val());
         for (var x in dataforsaving) {
@@ -657,13 +768,16 @@ function initDataTablesContract() {
                 type: 'post',
                 dataType: 'json',
                 data: JSON.stringify({
-                    LandContractCode: $('#LandContractCode').val(), // add contract_code value or landinformation code
+                    LandContractCode: $('#LandContractCode')
+                .val(), // add contract_code value or landinformation code
                     // LandInformationCode:,
                     rate: $('[data-rowid=' + dataforsaving[x] + '][data-colid="rate"]').val(),
-                    // date: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Payment_date"]').val(),
-                    Rate_per_year: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Rate_per_year"]').val(),
-                    Total_rate: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Total_rate"]').val(),
-                    date: $('[data-rowid=' + dataforsaving[x] + '][data-colid="startterm"]').data('startterm'),
+                    Rate_per_year: $('[data-rowid=' + dataforsaving[x] +
+                        '][data-colid="Rate_per_year"]').val(),
+                    Total_rate: $('[data-rowid=' + dataforsaving[x] + '][data-colid="Total_rate"]')
+                    .val(),
+                    date: $('[data-rowid=' + dataforsaving[x] + '][data-colid="startterm"]').data(
+                        'startterm'),
                     username: $("#username").val(),
                     token: $("#token").val(),
                     sysapp: sysapp
@@ -674,112 +788,139 @@ function initDataTablesContract() {
                 }
             })
         }
-        toastr.success('Data Saved!');
+        // toastr.success('Data Saved!');
     }
-/////////////////////////////////////////////////////////////////////////////END: SAVE UPDATE DATA/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////END: SAVE UPDATE DATA///////////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////START: VIEW LAND INFORMATION OF SPECIFIED LANDOWNER/////////////////////////////////////////////////////////////////////////////
-    $(".LandownerCode").change(function(e) {
+    /////////////////////////////////////////////////////////////////////////////START: VIEW LAND INFORMATION OF SPECIFIED LANDOWNER/////////////////////////////////////////////////////////////////////////////
+    $(".LandownerCode").change(function (e) {
         $("#viewLandInformation").removeAttr('disabled');
+        $('#viewLandInformation option:selected').val('');
+        $('#viewLotNumber').text('');
+        $('#viewCoOwner').val('');
+        $('#viewProvince').text('');
+        $('#viewCity').text('');
+        $('#viewBarangay').text('');
+        $('#viewArea').text('');
+        $('#CompanyCode').text('');
+
         var landowner = $(".LandownerCode option:selected").val();
         var LTHTML = '<option value="-" selected disabled>-</option>';
         $.ajax({
-                url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/getContractInfoData',
-                type: 'post',
-                dataType: 'json',
-                data: JSON.stringify({
-                    LandownerCode: landowner,
-                    username: $("#username").val(),
-                    token: $("#token").val(),
-                    sysapp: sysapp
-                }),
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    if ( data ) {
-                        $('#viewLandInformation').select2();
-                        $('#viewLandInformation').html('');
-                        for (var i in data) {
-                            LTHTML += '<option value="'+data[i].LandInformationCode+'">'+data[i].Description+' - ('+data[i].DocumentNumber+')'+'</option>';
-                        }
-                        $('#viewLandInformation').html(LTHTML);			
-                    } else {
-                        toastr.error('Error fetching Land Information!');
+            url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/getSelectedContractInfoData',
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify({
+                LandownerCode: landowner,
+                username: $("#username").val(),
+                token: $("#token").val(),
+                sysapp: sysapp
+            }),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                if (data) {
+                    $('#viewLandInformation').select2();
+                    $('#viewLandInformation').html('');
+                    for (var i in data) {
+                        LTHTML += '<option value="' + data[i].LandInformationCode + '">' + data[i]
+                            .Description + ' - (' + data[i].DocumentNumber + ')' + '</option>';
                     }
+                    $('#viewLandInformation').html(LTHTML);
+                } else {
+                    toastr.error('Error fetching Land Information!');
                 }
-            })
+            }
+        })
     });
-/////////////////////////////////////////////////////////////////////////////END: VIEW LAND INFORMATION OF SPECIFIED LANDOWNER/////////////////////////////////////////////////////////////////////////////
-    
-/////////////////////////////////////////////////////////////////////////////START: VIEW LAND INFORMATION OF SPECIFIED LANDOWNER/////////////////////////////////////////////////////////////////////////////
-    $("#viewLandInformation").change(function(e) {
+    /////////////////////////////////////////////////////////////////////////////END: VIEW LAND INFORMATION OF SPECIFIED LANDOWNER/////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////START: VIEW LAND INFORMATION OF SPECIFIED LANDOWNER/////////////////////////////////////////////////////////////////////////////
+    $("#viewLandInformation").change(function (e) {
         $("#plantationSelect").removeAttr('disabled');
         $("#repTextArea").removeAttr('disabled');
         $("#Sqm").removeAttr('disabled');
-        $("#heairTextArea").removeAttr('disabled');
-        // console.log('selected LI', $("#viewLandInformation option:selected").val());
-        // console.log('selected LI val', $("#viewLandInformation option:selected").val());
+        $("#viewCoOwner").removeAttr('disabled');
         var landinformationcode = $("#viewLandInformation option:selected").val();
         $.ajax({
-                url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/viewLandInformationSelected',
-                type: 'post',
-                dataType: 'json',
-                data: JSON.stringify({
-                    LandInformationCode: landinformationcode,
-                    username: $("#username").val(),
-                    token: $("#token").val(),
-                    sysapp: sysapp
-                }),
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                        console.log('data', data);
-                        if ( data ) {
-                            $('#viewLotNumber').text(data.LotNumber);
-                            $('#viewProvince').text(data.provinceName);
-                            $('#viewCity').text(data.cityName);
-                            $('#viewBarangay').text(data.barangayName);
-                            $('#viewArea').text(data.Area);
-                            // $('#viewProvince').val(data.provinceName);
-                            // $('#viewCity').val(data.cityName);
-                            // $('#viewBarangay').val(data.barangayName);
-                            // $('#viewArea').val(data.Area);
-                            // $('#viewLotNumber').val(data.LotNumber);
-                        } else {
-                            console.log('No Land Information data available.');
-                        }
+            url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/viewLandInformationSelected',
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify({
+                LandInformationCode: landinformationcode,
+                username: $("#username").val(),
+                token: $("#token").val(),
+                sysapp: sysapp
+            }),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                console.log('data', data);
+                if (data) {
+                    if (data.WithCoOwner == true) {
+                        $('.hideCoOwner').show();
+                        $('#viewWithCoOwner').text(', ET. AL.');
+                    }
+
+                    LandInformation = {
+                        LIContact: data.ContactNumber,
+                        LIName: data.name,
+                        LIEmail: data.Email,
+                        LILotNumber: data.LotNumber,
+                        LIProvince: data.provinceName,
+                        LICityName: data.cityName,
+                        LIBarangayName: data.barangayName,
+                        LIArea: data.Area,
+                        LIAvailableArea: data.availableArea,
+                        LICoOwner: data.CoOwner
+                    };
+
+                    console.log('Land Information Data JSON', LandInformation)
+                    // Selected Land Information Data
+                    $('#viewLotNumber').text(LandInformation.LILotNumber);
+                    $('#viewProvince').text(LandInformation.LIProvince);
+                    $('#viewCity').text(LandInformation.LICityName);
+                    $('#viewBarangay').text(LandInformation.LIBarangayName);
+                    $('#viewArea').text(LandInformation.LIArea);
+                    $('#Remaining').val(LandInformation.LIAvailableArea);
+                    $('#viewCoOwner').val(LandInformation.LICoOwner);
+                } else {
+                    console.log('No Land Information data available.');
                 }
-            })
+            }
+        })
     });
-/////////////////////////////////////////////////////////////////////////////END: VIEW LAND INFORMATION OF SPECIFIED LANDOWNER/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////END: VIEW LAND INFORMATION OF SPECIFIED LANDOWNER/////////////////////////////////////////////////////////////////////////////
     //END
 
-/////////////////////////////////////////////////////////////////////////////START: MINIMUM INPUT OF AREA TO BE CONTRACTED/////////////////////////////////////////////////////////////////////////////
-    function imposeMinMax(input){
-        if(input.value != "") {
-            if( parseFloat(input.value) < parseFloat(input.min) ) {
-            input.value = input.min;
+    /////////////////////////////////////////////////////////////////////////////START: MINIMUM INPUT OF AREA TO BE CONTRACTED/////////////////////////////////////////////////////////////////////////////
+    function imposeMinMax(input) {
+        if (input.value != "") {
+            if (parseFloat(input.value) < parseFloat(input.min)) {
+                input.value = input.min;
             }
-            console.log('input value', input.value);
-            console.log('max', $('#viewArea').text());
 
-            if(parseFloat(input.value) > parseFloat($('#viewArea').text())){
+            // if (parseFloat(input.value) > parseFloat($('#viewArea').text())) {
+            //     toastr.error('Input data reach the max limit of total area!');
+            //     input.value = $('#viewArea').text();
+            // }
+            if (parseFloat(input.value) > parseFloat($('#Remaining').val())) {
                 toastr.error('Input data reach the max limit of total area!');
-                input.value = $('#viewArea').text();
+                input.value = $('#Remaining').val();
             }
         }
     }
-/////////////////////////////////////////////////////////////////////////////END: MINIMUM INPUT OF AREA TO BE CONTRACTED/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////END: MINIMUM INPUT OF AREA TO BE CONTRACTED/////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////START: INITIALIZATION OF MULTIPLE SELECT AND DROPWDOWN SEARCHING CSS/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////START: INITIALIZATION OF MULTIPLE SELECT AND DROPWDOWN SEARCHING CSS/////////////////////////////////////////////////////////////////////////////
     //Initialize Select2 Elements
     $('.select2').select2()
 
     //Initialize Select2 Elements
     $('.select2bs4').select2({
-      theme: 'bootstrap4'
+        theme: 'bootstrap4'
     })
-/////////////////////////////////////////////////////////////////////////////END: INITIALIZATION OF MULTIPLE SELECT AND DROPWDOWN SEARCHING CSS/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////END: INITIALIZATION OF MULTIPLE SELECT AND DROPWDOWN SEARCHING CSS/////////////////////////////////////////////////////////////////////////////
 
-/////////////////////////////////////////////////////////////////////////////START: PLANTATION SELECTION/////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////START: PLANTATION SELECTION/////////////////////////////////////////////////////////////////////////////
     function getOptDataForPlantation() {
         var fields = $('.trigger');
         var fieldID = [];
@@ -800,6 +941,7 @@ function initDataTablesContract() {
             }
         }
     }
+
     function getOptDataForPlantationAppend(optSource, optId, optName, RAWHTML) {
         $.ajax({
             url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/getOptDataPlantation',
@@ -816,10 +958,11 @@ function initDataTablesContract() {
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 for (var i in data) {
-                    RAWHTML += '<option value="' + data[i].PlantationCode + '" data-company="'+ data[i].CompanyCode +'">' + data[i].PlantationCode + '</option>';
+                    RAWHTML += '<option value="' + data[i].PlantationCode + '" data-company="' + data[i]
+                        .CompanyCode + '">' + data[i].PlantationCode + '</option>';
                 }
                 $('.' + optSource + '.trigger').html(RAWHTML);
-                
+
             },
             error: function () {
                 toastr.error('Error on gathering Options!');
@@ -827,32 +970,63 @@ function initDataTablesContract() {
             }
         })
     }
-    $('.trigger').on('change', function() {
+    $('.trigger').on('change', function () {
         selectedData = $('.trigger').find(':selected').data('company');
         $('#CompanyCode').text(selectedData);
     });
-/////////////////////////////////////////////////////////////////////////////END: PLANTATION SELECTION/////////////////////////////////////////////////////////////////////////////
-//END:
+    /////////////////////////////////////////////////////////////////////////////END: PLANTATION SELECTION/////////////////////////////////////////////////////////////////////////////
+    //END:
 
-/////////////////////////////////////////////////////////////////////////////START: SQM CONVERTION INTO HAS/////////////////////////////////////////////////////////////////////////////
-$("#Sqm").keyup(function () {
-    const hectares = $('#Sqm').val() / 10000;
-    const remaining = parseFloat($('#viewArea').text()) - $('#Sqm').val();
-    $('#Hectares').val(hectares);
+    /////////////////////////////////////////////////////////////////////////////START: SQM CONVERTION INTO HAS/////////////////////////////////////////////////////////////////////////////
+    $("#Sqm").keyup(function () {
+        const hectares = $('#Sqm').val() / 10000;
+        $('#Hectares').val(hectares);
+    });
 
-    console.log('hectares', hectares);
-    console.log('view area', $('#viewArea').val());
-    console.log('sqm', $('#Sqm').val());
-    console.log('remaining', remaining);
+    $("#Hectares").keyup(function () {
+        const squareMeters = $('#Hectares').val() * 10000;
+        $('#Sqm').val(squareMeters);
+    });
+    /////////////////////////////////////////////////////////////////////////////END: SQM CONVERTION INTO HAS/////////////////////////////////////////////////////////////////////////////
+    
+    //START:
+    $(".LandownerCode").change(function (e) {
+        LOcode = $('.LandownerCode option:selected').val();
+        console.log('LandownerCode', LOcode);
+        $.ajax({
+            url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/getSelectedLandownerInfoData',
+            type: 'post',
+            dataType: 'json',
+            data: JSON.stringify({
+                LandownerCode: LOcode,
+                username: $("#username").val(),
+                token: $("#token").val(),
+                sysapp: sysapp
+            }),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                console.log('Landowner Info', data);
 
-    $('#Remaining').val(remaining);
-});
-
-$("#Hectares").keyup(function () {
-    const squareMeters = $('#Hectares').val() * 10000;
-
-    $('#Sqm').val(squareMeters);
-});
-/////////////////////////////////////////////////////////////////////////////END: SQM CONVERTION INTO HAS/////////////////////////////////////////////////////////////////////////////
-
+                // is Representative Data
+                $("#isRep").change(function (e) {
+                    if ($('#isRep').is(":checked") == true) {
+                        $('.RepName').prop('disabled',true);
+                        $('.RepContactNumber').prop('disabled',true);
+                        $('.RepEmail').prop('disabled',true);
+                        $('.RepName').val(data.Fullname);
+                        $('.RepContactNumber').val(data.ContactNumber);
+                        $('.RepEmail').val(data.Email);
+                    } else {
+                        $(".RepName").removeAttr('disabled');
+                        $(".RepContactNumber").removeAttr('disabled');
+                        $(".RepEmail").removeAttr('disabled');
+                        $('.RepName').val('');
+                        $('.RepContactNumber').val('');
+                        $('.RepEmail').val('');
+                    }
+                });
+            }
+        })
+    });
+    //END:
 </script>

@@ -92,11 +92,10 @@ function addContractInfoData(data) {
  * @param {*} sourceContract 
  */
 function saveLandContractData(sourceContract) {
-    alert(1);
     var fields = $('.triggercontractinfo');
     var sourcefile = 'Tbl_Uploads';
     var fieldID = [];
-    var inputData = {};
+    // var inputData = {};
     var inputDataCollection = {};
     for (var x in fields) {
         if (fields[x].className != undefined) {
@@ -119,13 +118,13 @@ function saveLandContractData(sourceContract) {
     console.log('Land Information Code', $('#viewLandInformation').val());
 
 
-    if (confirm('Save Landowner?')) {
+    if (confirm('Do you want to save it?\n\nPlease check the correctness of the information before saving.')) {
         inputDataCollection['username'] = $("#username").val();
         inputDataCollection['token'] = $("#token").val();
         inputDataCollection['dataSource'] = sourceContract;
         inputDataCollection['sysapp'] = sysapp;
         inputDataCollection['LeaseTerm'] = $(".terms").val(),
-            inputDataCollection['LandContractCode'] = landcontractcode;
+        inputDataCollection['LandContractCode'] = landcontractcode;
         inputDataCollection['PaymentTerms'] = $(".PaymentTermsCode").val();
         inputDataCollection['AdvancePayment'] = advancepayment;
         inputDataCollection['StartOfPayment'] = startpayment;
@@ -135,13 +134,24 @@ function saveLandContractData(sourceContract) {
         inputDataCollection['AmountOfAdvancePayment'] = $(".advance_payment_amount").val();
         inputDataCollection['LandInformationCode'] = $('#viewLandInformation').val();
         inputDataCollection['LandContractedArea'] = $('.LandContractedArea').val();
+
+        if ( $('.RepName').val() == '' && $('.RepContactNumber').val() == '' && $('.RepEmail').val() == '' ) {
+            inputDataCollection['RepresentativeName'] = null;
+            inputDataCollection['RepresentativeContactNumber'] = null;
+            inputDataCollection['RepresentativeEmail'] = null;
+        } else {
+            inputDataCollection['RepresentativeName'] = $('.RepName').val();
+            inputDataCollection['RepresentativeContactNumber'] = $('.RepContactNumber').val();
+            inputDataCollection['RepresentativeEmail'] = $('.RepEmail').val();
+        }
+
         console.log('sample', inputDataCollection);
         for (var j in fieldID) {
             inputDataCollection[fieldID[j]] = $('.triggercontractinfo.' + fieldID[j]).val();
             $('.triggercontractinfo.' + fieldID[j]).val('');
         }
 
-        inputDataCollection['inputData'] = inputData;
+        // inputDataCollection['inputData'] = inputData;
         console.log('data', inputDataCollection);
 
         $.ajax({
@@ -153,7 +163,6 @@ function saveLandContractData(sourceContract) {
             success: function (data) {
                 console.log(data);
                 if (data == 1) {
-                    saveEscalation();
                     getSysAllContractInfoData(sourceContract);
                     saveNewFile(sourcefile);
                     toastr.success('Data added!');
@@ -656,15 +665,14 @@ function viewContractInfoData(sourceContract, filter) {
         }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            console.log('Land Information Code', data);
             var LandInformationCode = data.LandInformationCode;
-            var LandContractCode = data.LandContractCode;
-            console.log('LandInformationCode', LandInformationCode)
+            // var LandContractCode = data.LandContractCode;
             $.ajax({
                 url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/getContractInfoData',
                 type: 'post',
                 dataType: 'json',
                 data: JSON.stringify({
+                    data: data,
                     LandInformationCode: LandInformationCode,
                     username: $("#username").val(),
                     token: $("#token").val(),
@@ -672,45 +680,41 @@ function viewContractInfoData(sourceContract, filter) {
                 }),
                 contentType: "application/json; charset=utf-8",
                 success: function (viewdata) {
-                    console.log('Land Informationdata', viewdata);
-                    $('#viewLandContractCode').val(data.LandContractCode);
-                    $('#viewLandInformationCode').val(viewdata.id);
-                    $('#viewDocumentType').val(viewdata.Description + ' - (' + viewdata.DocumentNumber + ')');
-                    $('#viewLotNumber').val(viewdata.LotNumber);
-                    $('#viewProvince').val(viewdata.provinceName);
-                    $('#viewCity').val(viewdata.cityName);
-                    $('#viewBarangay').val(viewdata.barangayName);
-                    $('#viewArea').val(viewdata.Area);
-                }
-            })
+                    viewContract = {
+                        contractdata: data,
+                        landinformationdata: viewdata    
+                    };
+                    console.log('view data', viewContract);
 
-            $.ajax({
-                url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'FMSmain/viewContractMainData',
-                type: 'post',
-                dataType: 'json',
-                data: JSON.stringify({
-                    LandContractCode: LandContractCode,
-                    username: $("#username").val(),
-                    token: $("#token").val(),
-                    sysapp: sysapp
-                }),
-                contentType: "application/json; charset=utf-8",
-                success: function (viewcontractdata) {
-                    console.log('ContractMain data', viewcontractdata);
-                    console.log('ContractMain data', viewcontractdata.LeaseTerm);
-                    $('#viewCompanyCode').val(viewcontractdata.CompanyCode + ' - ' + viewcontractdata.Companyname);
-                    $('#viewPlantation').val(viewcontractdata.PlantationCode);
-                    $('#viewCompanyCode').val(viewcontractdata.CompanyCode);
-                    $('#repTextArea').val(viewcontractdata.Representative);
-                    $('#repTextArea').val(viewcontractdata.Representative);
-                    $('#heairTextArea').val(viewcontractdata.Heirs);
-                    $('#viewLandowner').val(viewcontractdata.name);
-                    $('#viewlease_period').val(viewcontractdata.LeasePeriod);
-                    $('#viewLeaseTerm').val(viewcontractdata.LeaseTerm);
-                    $('#viewAdvancePayment').val(viewcontractdata.AdvancePayment);
-                    $('.viewStartOfPayment').val(viewcontractdata.StartOfPayment);
-                    $('#viewAmountOfAdvancePayment').val(viewcontractdata.AmountOfAdvancePayment);
-                    $('#viewPaymentTerm').val(viewcontractdata.PaymentTerms);
+                    //view contract data
+                    $('.name').text(viewContract.contractdata.Fullname);
+                    $('.landdocument').text(viewContract.landinformationdata.Document);
+                    $('.landlotnumber').text(viewContract.landinformationdata.LotNumber);
+                    
+                    if ( viewContract.landinformationdata.WithCoOwner == true ) {
+                        $('.hideCoOwner').show();
+                        $('.CoOwner').val(viewContract.landinformationdata.CoOwner);
+                    } else {
+                        $('.hideCoOwner').hide();
+                        $('.CoOwner').val('');
+                    }
+
+                    if ( viewContract.contractdata.RepresentativeName == '' ) {
+                        $('.hideRepresentativeLabel').hide();
+                    } else {
+                        $('.hideRepresentativeLabel').show();
+                        $('.RepName').text(viewContract.contractdata.RepresentativeName);
+                        $('.RepContactNumber').text(viewContract.contractdata.RepresentativeContactNumber);
+                        $('.RepEmail').text(viewContract.contractdata.RepresentativeEmail);
+                    }
+
+                    $('.province').text(viewContract.landinformationdata.provinceName);
+                    $('.city').text(viewContract.landinformationdata.cityName);
+                    $('.barangay').text(viewContract.landinformationdata.barangayName);
+                    $('.landtotalarea').text(viewContract.landinformationdata.Area);
+                    $('.landplantation').text(viewContract.contractdata.PlantationCode);
+                    $('.landcompany').text(viewContract.contractdata.CompanyCode + ' - ' + viewContract.contractdata.Companyname);
+                    $('.landcontractedarea').text(viewContract.contractdata.LandContractedArea);
                 }
             })
             stopLoading();
@@ -740,29 +744,30 @@ function saveNewFile(dataSource) {
         formData.append('sysapp', sysapp);
     }
 
-    if (confirm('Save this data?')) {
-        console.log(formData);
-        $.ajax({
-            url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'Common/FMSattachmentInitUpload',
-            type: "POST",
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                for (var i in data) {
-                    var name = data[i].name;
-                    var filename = data[i].filename;
-                    var extension = data[i].extension;
-                    console.log(name, filename, extension);
-                    saveNewUploadedFile(name, filename, extension, dataSource);
-                }
-            },
-            error: function () {
-                // File upload error handling
-                console.log("error");
+    // if (confirm('Save this data?')) {
+        
+    // }
+    // console.log(formData);
+    $.ajax({
+        url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'Common/FMSattachmentInitUpload',
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            for (var i in data) {
+                var name = data[i].name;
+                var filename = data[i].filename;
+                var extension = data[i].extension;
+                console.log(name, filename, extension);
+                saveNewUploadedFile(name, filename, extension, dataSource);
             }
-        })
-    }
+        },
+        error: function () {
+            // File upload error handling
+            console.log("error");
+        }
+    })
 }
 function saveNewUploadedFile(name, filename, extension, dataSource) {
     var inputData = {};
@@ -788,7 +793,7 @@ function saveNewUploadedFile(name, filename, extension, dataSource) {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
             if (data.retval == 1) {
-                toastr.success('Data added!');
+                // toastr.success('Data added!');
                 $('.triggerdetail').val('');
             } else {
                 toastr.error('Duplicate code!');
@@ -801,5 +806,9 @@ function saveNewUploadedFile(name, filename, extension, dataSource) {
             stopLoading();
         }
     })
+}
+
+function clearSelection(e) {
+    $(e).select2('destroy').val('').select2();
 }
 //END:
