@@ -9,3 +9,6 @@
     border-right: none;
     text-align:center;
 }
+.hide_column {
+    display : none;
+}

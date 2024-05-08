@@ -308,8 +308,7 @@ function viewLoginUser() {
     })
 }
 
-// DATA CRUD start
-
+//DATA CRUD start
 function getSysData(dataSource, filter) {
     startLoading();
     var fields = $('.triggerdetail');
@@ -391,7 +390,6 @@ function updateData(data, id, name, status) {
             toastr.error('Error on fetching modal view!');
         }
     })
-
 }
 function addData(data) {
     showModal();
@@ -418,7 +416,6 @@ function addData(data) {
         }
     })
 }
-
 function saveNewData(dataSource) {
     var fields = $('.triggerdetail');
     var fieldID = [];
@@ -509,7 +506,6 @@ function viewCalendar() {
         }
     })
 }
-
 function getOptDataForUpdate(dataSource, filter, id, name, selected) {
     $.ajax({
         url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'Common/getSelectedOptData',
@@ -596,7 +592,6 @@ function getOptDataForAddAppend(optSource, optId, optName, RAWHTML) {
         }),
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            console.log(0);
             for (var i in data) {
                 RAWHTML += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
             }
@@ -618,10 +613,10 @@ function showiFrame(data) {
     //$('.modal-body').html('<iframe src="https://www.google.com/maps/place?igu=1/' + data + '"></iframe>');
     $('.modal-body').html('');
     $('#modalBody').css("height", "70vh");
-    setTimeout(initMap, 250, data);
+    setTimeout(initMapGeoLoc, 250, data);
 }
 
-function initMap(data) {
+function initMapGeoLoc(data) {
     var geoloc = data.split(',');
     mapboxgl.accessToken = mbgl;
     var map = new mapboxgl.Map({
@@ -642,11 +637,6 @@ function initMap(data) {
     );
     const plantLocation = new mapboxgl.Marker().setLngLat([geoloc[0], geoloc[1]]).addTo(map);
 }
-
-// Maps start
-
-
-// end of maps
 function viewCalendar() {
     showModal();
     ModalSize('xl');
@@ -739,6 +729,8 @@ function initDataTables(Data) {
             $(this).bootstrapSwitch('state', $(this).prop('checked'));
         })
     }
+    console.log(Data);
+    console.log(Permission.includes(Data + "_add") || excempted.includes($("#username").val()));
     if (Permission.includes(Data + "_add") || excempted.includes($("#username").val())) {
         $('#tbl_' + Data + '_filter').append(' <button class="btn btn-outline-success btn-sm addData" onclick="addData(\'' + Data + '\')"><i class="fas fa-plus"></i> Add</button>');
     }
@@ -875,6 +867,16 @@ $(document).on('click', '#duplicatepage', function () {
 })
 $(document).on('click', '#helpbtn', function () {
     window.open('http://support.lapanday.com', '_blank');
+})
+$(document).on('keyup', '.autoCaps', function () {
+    $(this).val($(this).val().toUpperCase());
+})
+$(document).on('keyup', '.maskAmount', function () {
+    $(this).mask("#,##0.00", { reverse: true });
+
+})
+$(document).on('keyup', '.maskPhone', function () {
+    $(this).mask("0000-000-0000");
 })
 function showModal() {
     $('#modalBody').removeAttr('style');

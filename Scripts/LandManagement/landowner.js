@@ -98,12 +98,10 @@ function saveLandownerData(sourceLandowner) {
     var inputDataCollection = {};
     var inputDataCompany = {};
     var lastname = '';
-    var suffix = '';
     var contactnumber = '';
     var remarks = '';
     var address = '';
-    var owners = 0;
-    var coowners = '';
+
     for (var x in fields) {
         if (fields[x].className != undefined) {
             var y = fields[x].className.split(' ');
@@ -118,16 +116,10 @@ function saveLandownerData(sourceLandowner) {
     contactnumber = $('#idvlcontactnumber').val() == '' ? $('#companynumber').val() : $('#idvlcontactnumber').val();
     address = $('.idvladdress').val() == '' ? $('.companyaddress').val() : $('.idvladdress').val();
     remarks = $('#idvlremarks').val() == '' ? $('#companyremarks').val() : $('#idvlremarks').val();
-    owners = $('.checkCoOwners').is(":checked") == true ? 1 : 0;
-    suffix = $('.checkCoOwners').is(":checked") == true ? $('.idvlsuffix').val() + ', ET. AL.' : null;
-    coowners = $('.checkCoOwners').is(":checked") == false ? null : $('#textareaCoOwner').val();
-
     console.log('last name', lastname);
     console.log('contact number', contactnumber);
     console.log('remarks', remarks);
-    console.log('owner', owners);
     console.log('address', address);
-    console.log('suffix', suffix);
 
     if (confirm('Save Landowner data?')) {
         inputDataCollection['username'] = $("#username").val();
@@ -138,10 +130,7 @@ function saveLandownerData(sourceLandowner) {
         inputData['ContactNumber'] = contactnumber;
         inputData['remarks'] = remarks;
         inputData['cityCode'] = $('.cityCode').val();
-        inputData['WithCoOwner'] = owners;
-        inputData['Suffix'] = suffix;
         inputData['barangayCode'] = $('.barangayCode').val();
-        inputData['CoOwner'] = coowners;
         inputDataCompany['LastName'] = lastname;
         inputDataCompany['ContactNumber'] = contactnumber;
         inputDataCompany['Address'] = address;
@@ -151,7 +140,7 @@ function saveLandownerData(sourceLandowner) {
             $('.triggerlandowner.' + fieldID[j]).val('');
         }
         inputDataCollection['inputData'] = $('.checkCompany').is(":checked") == false ? inputData : inputDataCompany
-        console.log('Landowner Data', inputDataCollection);
+        console.log('Landowner Data',inputDataCollection);
         $.ajax({
             url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'Common/saveSysData',
             type: 'post',
@@ -195,11 +184,11 @@ function getOptDataForAddLandowner() {
             var optId = tagClasses[0];
             var optName = tagClasses[1];
 
-            if (fieldID[j].length == 11) {
-                getOptDataForAddAppendCountry(optSource, optId, optName, RAWHTML);
+            if ( fieldID[j].length == 11 ) {
+                getOptDataForAddAppendCountry(optSource,optId,optName,RAWHTML);
             } else {
                 var RAWHTML = '<option disabled selected>-</option>';
-                getOptDataForAddLandownerAppend(optSource, optId, optName, RAWHTML);
+                getOptDataForAddLandownerAppend(optSource,optId,optName,RAWHTML);
             }
         }
     }
@@ -212,7 +201,7 @@ function getOptDataForAddLandowner() {
  * @param {*} optName 
  * @param {*} RAWHTML 
  */
-function getOptDataForAddLandownerAppend(optSource, optId, optName, RAWHTML) {
+function getOptDataForAddLandownerAppend(optSource,optId,optName,RAWHTML){
     $.ajax({
         url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'Common/getOptData',
         type: 'post',
@@ -283,8 +272,8 @@ function getSysAllLandownerData(sourceLandowner) {
                         }
                     } else if (colid[j] == 'geoLocation') {
                         //dataarr.push('<div style="text-align:center"><a href="https://www.google.com/maps/place/' + data[i][colid[j]] + '" target="_blank">' + data[i][colid[j]] + '</a></div>');
-                        dataarr.push('<div style="text-align:center"><button class="btn btn-success-sm" onclick="showiFrame(\'' + data[i][colid[j]] + '\')">' + data[i][colid[j]] + '</a></div>');
-
+                        dataarr.push('<div style="text-align:center"><button class="btn btn-success-sm" onclick="showiFrame(\''+data[i][colid[j]]+'\')">' + data[i][colid[j]] + '</a></div>');
+                        
                     } else {
                         dataarr.push('<div style="text-align:center">' + data[i][colid[j]] + '</div>');
                     }
@@ -350,7 +339,7 @@ function updateLandownerData(data, id, name, status) {
  */
 //DATA CRUD start
 function getSysLandownerData(sourceLandowner, filter) {
-
+    
     startLoading();
     var fields = $('.triggerlandowner');
     var fieldID = [];
@@ -376,13 +365,13 @@ function getSysLandownerData(sourceLandowner, filter) {
         success: function (data) {
             console.log('data update', data);
 
-            if (data.CountryCode != 608) {
+            if ( data.CountryCode != 608 ) {
                 $('#addressLabel').hide();
                 $('#addressTextArea').hide();
                 $('#hideSelect').hide();
             }
 
-            if (data.FirstName == null) {
+            if ( data.FirstName == null ) {
                 $('.hideIndividual').hide()
                 $('.hideCompany').show()
             } else {
@@ -390,7 +379,7 @@ function getSysLandownerData(sourceLandowner, filter) {
                 $('.hideCompany').hide()
             }
 
-            if (data.CoOwner == null || data.CoOwner == '') {
+            if ( data.CoOwner == null || data.CoOwner == '' ) {
                 $('.showCoOwners').hide()
             } else {
                 $('.showCoOwners').show()
@@ -418,7 +407,7 @@ function getSysLandownerData(sourceLandowner, filter) {
             //START: PARAMETER: PROVINCECODE TO FETCH CITY
             var provinceCode = data.provinceCode;
             $('#citySelect').append('<option value="-">loading...</option>');
-            var CITYHTML = '<option value="' + data.cityCode + '" selected disabled>' + data.cityName + '</option>';
+            var CITYHTML = '<option value="'+data.cityCode+'" selected disabled>'+data.cityName+'</option>';
             $.ajax({
                 url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'common/getCityByProvince',
                 type: 'post',
@@ -432,11 +421,11 @@ function getSysLandownerData(sourceLandowner, filter) {
                 }),
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    if (data.length !== 0) {
+                    if ( data.length !== 0 ) {
                         for (var i in data) {
                             CITYHTML += '<option value="' + data[i].cityCode + '">' + data[i].cityName + '</option>';
                         }
-                        $('#citySelect').html(CITYHTML);
+                        $('#citySelect').html(CITYHTML);					
                     } else {
                         // Handle the case when no data is returned
                         console.log('No city data available.');
@@ -448,7 +437,7 @@ function getSysLandownerData(sourceLandowner, filter) {
             //START: PARAMETER: CITYICODE TO FETCH BARANGAY
             var cityCode = data.cityCode;
             $('#barangaySelect').append('<option value="-">loading...</option>');
-            var BRGYHTML = '<option value="' + data.barangayCode + '" selected disabled>' + data.barangayName + '</option>';
+            var BRGYHTML = '<option value="'+data.barangayCode+'" selected disabled>'+data.barangayName+'</option>';
             $.ajax({
                 url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'common/getBarangayByCity',
                 type: 'post',
@@ -461,11 +450,11 @@ function getSysLandownerData(sourceLandowner, filter) {
                 }),
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    if (data.length !== 0) {
+                    if ( data.length !== 0 ) {
                         for (var i in data) {
                             BRGYHTML += '<option value="' + data[i].barangayCode + '">' + data[i].barangayName + '</option>';
                         }
-                        $('#barangaySelect').html(BRGYHTML);
+                        $('#barangaySelect').html(BRGYHTML);				
                     } else {
                         // Handle the case when no data is returned
                         console.log('No barangay data available.');
@@ -521,7 +510,7 @@ function getOptDataForLandownerUpdate(sourceLandowner, filter, id, name, selecte
                 }),
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
-                    if (data.length !== 0) {
+                    if ( data.length !== 0 ) {
                         for (var i in data) {
                             RAWHTML += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
                         }
@@ -550,7 +539,7 @@ function getOptDataForLandownerUpdate(sourceLandowner, filter, id, name, selecte
  * @param {*} optName 
  * @param {*} RAWHTML 
  */
-function getOptDataForAddAppendCountry(optSource, optId, optName, RAWHTML) {
+function getOptDataForAddAppendCountry(optSource,optId,optName,RAWHTML){
     $.ajax({
         url: apiURL('c2673537-85cf-4a28-9cbc-5dad26d9c4a9') + 'Common/getOptData',
         type: 'post',
